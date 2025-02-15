@@ -83,4 +83,27 @@ class ProductServiceImplTest {
 
         assertEquals("El producto debe tener almenos 5 imagenes.", ex.getMessage());
     }
+
+    @Test
+    @DisplayName("Testear obtener un producto al buscar por id existente en la bd.")
+    void testFindById() throws Exception {
+        Product product = new Product(null, "nombre3", "descripcion", 11.11d, null, imageSet);
+        Long id = productService.saveProduct(product).getId();
+
+        Product foundProduct = productService.findByIdProduct(id);
+
+        assertNotNull(foundProduct);
+        assertEquals("nombre3", foundProduct.getName());
+    }
+
+    @Test
+    @DisplayName("Testear no obtener un producto al buscar id no existente en la bd.")
+    void testExceptionIfProductNotFound() throws IllegalStateException {
+        IllegalStateException ex = assertThrows(
+                IllegalStateException.class,
+                () -> productService.findByIdProduct(1000L)
+        );
+
+        assertEquals("Producto con ID: 1000 no encontrado.", ex.getMessage());
+    }
 }
