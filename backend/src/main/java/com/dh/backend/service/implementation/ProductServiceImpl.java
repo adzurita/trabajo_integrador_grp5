@@ -1,10 +1,14 @@
 package com.dh.backend.service.implementation;
 
+import com.dh.backend.model.Image;
 import com.dh.backend.model.Product;
 import com.dh.backend.repository.IProductRepository;
 import com.dh.backend.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -16,8 +20,18 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product save(Product product) {
-        Product productSaved = iProductRepository.save(product);
-        return productSaved;
+    public Product saveProduct(Product product) throws Exception {
+        Optional<Product> OptionalProduct = iProductRepository.findByName(product.getName());
+        if (OptionalProduct.isPresent()) {
+            throw new Exception("El producto con nombre '" + product.getName() + "' ya existe.");
+        }
+        if (product.getImageSet() == null || product.getImageSet().size() < 5) {
+            throw new Exception("El producto debe tener almenos 5 imagenes.");
+        }
+        for (Image image : product.getImageSet()) {
+            image.setProduct(product);
+        }
+        product.setCreatedAt(LocalDateTime.now());
+        return iProductRepository.save(product);
     }
 }

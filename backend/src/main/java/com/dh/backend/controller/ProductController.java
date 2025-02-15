@@ -5,10 +5,7 @@ import com.dh.backend.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
@@ -21,9 +18,15 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> save(@RequestBody Product product) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(productService.save(product));
+    public ResponseEntity<?> save(@RequestBody Product product) {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(productService.saveProduct(product));
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ex.getMessage());
+        }
     }
 }
