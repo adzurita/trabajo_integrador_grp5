@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +40,16 @@ public class ProductServiceImpl implements IProductService {
     public Product findByIdProduct(Long id) throws IllegalStateException {
         return iProductRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Producto con ID: " + id + " no encontrado."));
+    }
+
+    @Override
+    public List<Product> findAllProducts() {
+        List<Product> products = iProductRepository.findAll();
+        if (products.isEmpty()) {
+            System.out.println("No se encontraron productos.");
+        } else {
+            System.out.println(products.size() + " productos encontrados."); // -> "logger"
+        }
+        return products;
     }
 }
