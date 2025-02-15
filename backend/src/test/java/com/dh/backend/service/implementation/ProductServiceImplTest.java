@@ -106,4 +106,19 @@ class ProductServiceImplTest {
 
         assertEquals("Producto con ID: 1000 no encontrado.", ex.getMessage());
     }
+
+    @Test
+    @DisplayName("Testear obtener todos los productos de la bd (hay almenos 1 producto).")
+    void testFindAllProducts() throws Exception {
+        Product product = new Product(null, "nombre4", "descripcion", 55.55d, null, imageSet);
+        productService.saveProduct(product);
+
+        List<Product> products = productService.findAllProducts();
+
+        assertNotNull(products);
+        assertFalse(products.isEmpty());
+        // -> verificar que cada elemento de la lista sea un producto
+    }
+
+    // Test cuando no hay productos
 }
