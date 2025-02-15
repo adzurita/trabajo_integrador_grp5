@@ -34,4 +34,10 @@ public class ProductServiceImpl implements IProductService {
         product.setCreatedAt(LocalDateTime.now());
         return iProductRepository.save(product);
     }
+
+    @Override
+    public Product findByIdProduct(Long id) throws IllegalStateException {
+        return iProductRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Producto con ID: " + id + " no encontrado."));
+    }
 }

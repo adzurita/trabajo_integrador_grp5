@@ -29,4 +29,16 @@ public class ProductController {
                     .body(ex.getMessage());
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        try {
+            return ResponseEntity
+                    .ok(productService.findByIdProduct(id));
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ex.getMessage());
+        }
+    }
 }

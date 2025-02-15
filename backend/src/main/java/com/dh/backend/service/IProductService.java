@@ -4,4 +4,5 @@ import com.dh.backend.model.Product;
 
 public interface IProductService {
     Product saveProduct(Product product) throws Exception;
+    Product findByIdProduct(Long id);
 }
