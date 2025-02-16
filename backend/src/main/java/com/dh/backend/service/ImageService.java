@@ -5,9 +5,7 @@ import com.dh.backend.model.Product;
 import com.dh.backend.repository.ImageRepository;
 import com.dh.backend.repository.ProductRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +19,7 @@ public class ImageService {
         this.productRepository = productRepository;
     }
 
-    public Image saveImage(Long productId, MultipartFile file) throws IOException {
+    public Image saveImage(Long productId, String imageUrl) {
         Optional<Product> productOptional = productRepository.findById(productId);
 
         if (productOptional.isEmpty()) {
@@ -30,8 +28,7 @@ public class ImageService {
 
         Image image = new Image();
         image.setProduct(productOptional.get());
-        image.setImageData(file.getBytes());
-        image.setImageType(file.getContentType());
+        image.setImageUrl(imageUrl);  // Guardamos la URL en lugar de los bytes
 
         return imageRepository.save(image);
     }
@@ -40,8 +37,11 @@ public class ImageService {
         return imageRepository.findByProductId(productId);
     }
 
-    public byte[] getImage(Long imageId) {
-        Optional<Image> imageOptional = imageRepository.findById(imageId);
-        return imageOptional.map(Image::getImageData).orElse(null);
+    public void deleteImage(Long imageId) {
+        if (!imageRepository.existsById(imageId)) {
+            throw new RuntimeException("Image not found with ID: " + imageId);
+        }
+        imageRepository.deleteById(imageId);
     }
 }
+

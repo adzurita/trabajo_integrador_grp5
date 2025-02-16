@@ -13,14 +13,12 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    private byte[] imageData;
-
     @Column(nullable = false)
-    private String imageType;
+    private String imageUrl;  // Ahora almacenamos la URL en lugar de los bytes
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 }
+
 
