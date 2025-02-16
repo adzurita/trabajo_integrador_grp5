@@ -5,7 +5,6 @@ import com.dh.backend.model.Product;
 import com.dh.backend.repository.ImageRepository;
 import com.dh.backend.repository.ProductRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ public class ImageService {
         this.productRepository = productRepository;
     }
 
-    public Image saveImage(Long productId, String imageUrl) {
+    public Image saveImage(Long productId, String imageUrl, Integer displayOrder) {
         Optional<Product> productOptional = productRepository.findById(productId);
 
         if (productOptional.isEmpty()) {
@@ -28,7 +27,8 @@ public class ImageService {
 
         Image image = new Image();
         image.setProduct(productOptional.get());
-        image.setImageUrl(imageUrl);  // Guardamos la URL en lugar de los bytes
+        image.setImageUrl(imageUrl);
+        image.setDisplayOrder(displayOrder);
 
         return imageRepository.save(image);
     }
@@ -36,12 +36,6 @@ public class ImageService {
     public List<Image> getImagesByProduct(Long productId) {
         return imageRepository.findByProductId(productId);
     }
-
-    public void deleteImage(Long imageId) {
-        if (!imageRepository.existsById(imageId)) {
-            throw new RuntimeException("Image not found with ID: " + imageId);
-        }
-        imageRepository.deleteById(imageId);
-    }
 }
+
 

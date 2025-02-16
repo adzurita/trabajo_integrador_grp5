@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/images")
@@ -19,8 +20,15 @@ public class ImageController {
     }
 
     @PostMapping("/{productId}/upload")
-    public ResponseEntity<?> uploadImage(@PathVariable Long productId, @RequestBody String imageUrl) {
-        Image image = imageService.saveImage(productId, imageUrl);
+    public ResponseEntity<?> uploadImage(@PathVariable Long productId, @RequestBody Map<String, Object> payload) {
+        String imageUrl = (String) payload.get("imageUrl");
+        Integer displayOrder = (Integer) payload.get("displayOrder");
+
+        if (imageUrl == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Image URL is required");
+        }
+
+        Image image = imageService.saveImage(productId, imageUrl, displayOrder);
         return ResponseEntity.status(HttpStatus.CREATED).body(image);
     }
 
@@ -34,15 +42,7 @@ public class ImageController {
 
         return ResponseEntity.ok(images);
     }
-    @DeleteMapping("/{imageId}")
-    public ResponseEntity<?> deleteImage(@PathVariable Long imageId) {
-        try {
-            imageService.deleteImage(imageId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
 }
+
 
 
