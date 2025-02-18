@@ -1,11 +1,20 @@
+import { Routes, Route } from "react-router-dom";
+
+import { Home, Admin } from "./pages/index";
+import { Header } from "./components/index";
 import "./App.css";
-import Button from "@mui/material/Button";
 
 function App() {
   return (
     <>
-      Explora+
-      <Button variant="contained">Conoce más ...</Button>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<Admin />} />
+        {/*         <Route path="/recomendaciones" element={<RecomendacionesPage />} />
+        <Route path="/explora" element={<ExploraPage />} /> 
+        <Route path="*" element={<NotFoundPage />} />*/}
+      </Routes>
     </>
   );
 }
