@@ -1,19 +1,17 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
-import { Home, Admin } from "./pages/index";
+import { Home, AdminPage, PostCreate } from "./pages/index";
 import { Header } from "./components/index";
 import "./App.css";
 
 function App() {
   return (
     <>
-      <Header />
+      {!location.pathname.startsWith("/admin") && <Header />}
+
       <Routes>
+        <Route path="/admin*" element={<AdminPage />} />
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
-        {/*         <Route path="/recomendaciones" element={<RecomendacionesPage />} />
-        <Route path="/explora" element={<ExploraPage />} /> 
-        <Route path="*" element={<NotFoundPage />} />*/}
       </Routes>
     </>
   );
