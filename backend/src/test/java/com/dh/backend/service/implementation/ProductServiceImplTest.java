@@ -31,11 +31,11 @@ class ProductServiceImplTest {
     void setUp() {
         //productService.deleteAll();
         imageSet.clear();
-        imageSet.add(new Image(null, "url1", null));
-        imageSet.add(new Image(null, "url2", null));
-        imageSet.add(new Image(null, "url3", null));
-        imageSet.add(new Image(null, "url4", null));
-        imageSet.add(new Image(null, "url5", null));
+        imageSet.add(new Image(null, "url1", null, null));
+        imageSet.add(new Image(null, "url2", null, null));
+        imageSet.add(new Image(null, "url3", null, null));
+        imageSet.add(new Image(null, "url4", null, null));
+        imageSet.add(new Image(null, "url5", null, null));
     }
 
     @Test
