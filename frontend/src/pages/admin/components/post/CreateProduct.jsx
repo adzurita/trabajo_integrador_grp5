@@ -17,8 +17,6 @@ import {
 import BookIcon from "@mui/icons-material/Book";
 export const PostIcon = BookIcon;
 
-
-
 export const PostCreate = () => (
   <Create title="Create a Post">
     <SimpleForm>
@@ -31,4 +29,3 @@ export const PostCreate = () => (
     </SimpleForm>
   </Create>
 );
-

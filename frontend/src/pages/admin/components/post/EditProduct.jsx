@@ -25,7 +25,7 @@ const PostTitle = () => {
 export const PostEdit = () => (
   <Edit title={<PostTitle />}>
     <SimpleForm>
-    <TextInput source="Imagen" label="Url de la imagen" />
+      <TextInput source="Imagen" label="Url de la imagen" />
       <TextInput source="Nombre" />
       <TextInput source="Descripción" options={{ multiline: true }} />
       <TextInput source="Precio" />

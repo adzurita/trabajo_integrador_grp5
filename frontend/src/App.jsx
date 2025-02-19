@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import { Home, AdminPage, PostCreate } from "./pages/index";
+import { Home, AdminPage } from "./pages/index";
 import { Header } from "./components/index";
 import "./App.css";
 
