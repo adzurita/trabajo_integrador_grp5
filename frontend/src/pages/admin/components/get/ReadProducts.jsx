@@ -18,21 +18,21 @@ import BookIcon from "@mui/icons-material/Book";
 export const PostIcon = BookIcon;
 
 export const PostList = () => (
-    <List>
-      <Datagrid>
-        <TextField source="id" />
-        <ImageField
-          source="Imagen"
-          title="Imagen del producto"
-          sx={{ width: 50, height: 50 }}
-        />
-        <TextField source="Nombre" />
-        <TextField source="Descripción" options={{ multiline: true }} />
-        <TextField source="Precio" />
-        <TextField source="Categoría" />
-        <TextField source="Status" />
-  
-        <EditButton />
-      </Datagrid>
-    </List>
-  );
+  <List >
+    <Datagrid >
+      <TextField source="id" />
+      <ImageField
+        source="Imagen"
+        title="Imagen del Tour"
+        sx={{ width: "auto", height: 100 }}
+      />
+      <TextField source="Nombre" />
+      <TextField source="Descripción" options={{ multiline: true }} />
+      <TextField source="Precio" />
+      <TextField source="Categoría" />
+      <TextField source="Status" />
+
+      <EditButton sx={{ backgroundColor: "#00CED1", color: "black" }}/>
+    </Datagrid>
+  </List>
+);
