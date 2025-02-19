@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   List,
   Datagrid,
@@ -15,8 +14,9 @@ import {
   ImageField,
 } from "react-admin";
 import BookIcon from "@mui/icons-material/Book";
-export const PostIcon = BookIcon;
 import { Box } from "@mui/material";
+
+export const PostIcon = BookIcon;
 
 export const PostList = () => (
   <List
@@ -39,7 +39,7 @@ export const PostList = () => (
           },
         }}
       >
-        <TextField source="id" />
+        <TextField source="id"sx={{ width: "50px" }}/>
         <ImageField
           source="Imagen"
           title="Imagen del Tour"
@@ -55,7 +55,7 @@ export const PostList = () => (
             },
           }}
         />
-        <TextField source="Nombre" />
+        <TextField source="Nombre" sx={{ width: "200px" }}/>
         <TextField
           source="Descripción"
           sx={{

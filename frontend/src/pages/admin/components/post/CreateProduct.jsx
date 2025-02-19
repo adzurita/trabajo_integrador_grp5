@@ -19,26 +19,7 @@ import {
 import { Grid, Box, Container } from "@mui/material";
 import BookIcon from "@mui/icons-material/Book";
 export const PostIcon = BookIcon;
-
-const validatePostCreation = (values) => {
-  const errors = {};
-  const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
-
-  if (!values.Imagen || !urlPattern.test(values.Imagen)) {
-    errors.Imagen = "Debe ser una URL válida de imagen";
-  }
-  if (!values.Nombre || values.Nombre.length < 5) {
-    errors.Nombre = "El nombre debe tener al menos 5 caracteres";
-  }
-  if (!values.Descripción || values.Descripción.length < 5) {
-    errors.Descripción = "La descripción debe tener al menos 5 caracteres";
-  }
-  if (!values.Precio || isNaN(values.Precio)) {
-    errors.Precio = "El precio debe ser un número válido";
-  }
-
-  return errors;
-};
+import { validatePostCreation } from "../../../../helpers/index";
 
 export const PostCreate = () => (
   <Create
@@ -80,7 +61,7 @@ export const PostCreate = () => (
           <Grid item xs={12} display="flex" justifyContent="center">
             <Box mt={2}>
               <SaveButton
-              label="Crear experiencia"
+                label="Crear"
                 sx={{
                   backgroundColor: "#00CED1",
                   borderRadius: "10px",
