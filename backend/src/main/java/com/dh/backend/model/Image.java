@@ -1,5 +1,6 @@
 package com.dh.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "product_idproduct", nullable = false)  // Referencia correcta
+    @JsonIgnore
     private Product product;
 }
 
