@@ -1,4 +1,4 @@
-import { Admin, Resource } from "react-admin";
+import { Admin, Resource, nanoLightTheme, nanoDarkTheme } from "react-admin";
 import fakeDataProvider from "ra-data-fakerest";
 import { PostList, PostEdit, PostCreate, PostIcon } from "./components/index";
 
@@ -47,7 +47,12 @@ export const AdminPage = () => {
   });
 
   return (
-    <Admin basename="/admin" dataProvider={dataProvider}>
+    <Admin
+      basename="/admin"
+      dataProvider={dataProvider}
+      theme={nanoLightTheme}
+      darkTheme={nanoLightTheme}
+    >
       <Resource
         name="posts"
         list={PostList}

@@ -18,8 +18,8 @@ import BookIcon from "@mui/icons-material/Book";
 export const PostIcon = BookIcon;
 
 export const PostList = () => (
-  <List >
-    <Datagrid >
+  <List>
+    <Datagrid>
       <TextField source="id" />
       <ImageField
         source="Imagen"
@@ -32,7 +32,7 @@ export const PostList = () => (
       <TextField source="Categoría" />
       <TextField source="Status" />
 
-      <EditButton sx={{ backgroundColor: "#00CED1", color: "black" }}/>
+      <EditButton sx={{ backgroundColor: "#00CED1", color: "black" }} />
     </Datagrid>
   </List>
 );
