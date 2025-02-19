@@ -1,7 +1,6 @@
-import * as React from "react";
 import { Admin, Resource } from 'react-admin';
 import fakeDataProvider from "ra-data-fakerest";
-import { PostList, PostEdit, PostCreate, PostIcon } from './components/posts/ProductCreate';
+import { PostList, PostEdit, PostCreate, PostIcon } from './components/index';
 
 export const AdminPage = () => {  
   const dataProvider = fakeDataProvider({
