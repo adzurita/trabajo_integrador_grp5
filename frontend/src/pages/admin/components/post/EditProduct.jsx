@@ -22,7 +22,7 @@ import {
 import BookIcon from "@mui/icons-material/Book";
 export const PostIcon = BookIcon;
 import { Grid, Box, Container } from "@mui/material";
-import { validatePostCreation } from "../../../../helpers/index";
+
 
 
 export const PostEdit = () => (
