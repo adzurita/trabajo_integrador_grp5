@@ -58,7 +58,7 @@ export const AdminPage = () => {
         Precio: "1200 USD",
         Duración: "5 días",
         Categoría: "Aventura",
-        Imagen: "https://wallpaperaccess.com/full/4736716.jpg",
+        Imagenes: ["https://wallpaperaccess.com/full/4736716.jpg"],
         Status: "Disponible",
       },
       {
@@ -70,8 +70,8 @@ export const AdminPage = () => {
         Precio: "1800 USD",
         Duración: "7 días",
         Categoría: "Cultural",
-        Imagen:
-          "https://estaticos-cdn.prensaiberica.es/clip/6996649c-c464-4f50-9e30-255c27b2015b_source-aspect-ratio_default_0.jpg",
+        Imagenes:
+          ["https://estaticos-cdn.prensaiberica.es/clip/6996649c-c464-4f50-9e30-255c27b2015b_source-aspect-ratio_default_0.jpg"],
         Status: "Disponible",
       },
       {
@@ -83,8 +83,8 @@ export const AdminPage = () => {
         Precio: "2500 USD",
         Duración: "4 días",
         Categoría: "Romántico",
-        Imagen:
-          "https://www.infinitaeventos.com/contenido/uploads/2019/01/enamorados-paris.jpg",
+        Imagenes:
+          ["https://www.infinitaeventos.com/contenido/uploads/2019/01/enamorados-paris.jpg"],
         Status: "Agotado",
       },
     ],

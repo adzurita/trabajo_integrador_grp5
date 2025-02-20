@@ -20,6 +20,32 @@ export const PostIcon = BookIcon;
 
 import { TopToolbar, CreateButton } from "react-admin";
 
+
+const MultipleImageField = ({ source }) => {
+  const record = useRecordContext();
+  if (!record || !record[source]) return null;
+
+  return (
+    <Box display="flex" gap={1}>
+      {record[source].map((url, index) => (
+        <img
+          key={index}
+          src={url}
+          alt={`Imagen ${index + 1}`}
+          style={{
+            width: "50px",
+            height: "50px",
+            objectFit: "cover",
+            borderRadius: "5px",
+            border: "1px solid #ddd",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
+        />
+      ))}
+    </Box>
+  );
+};
+
 const CustomListActions = () => (
   <TopToolbar>
     <CreateButton
@@ -70,7 +96,7 @@ export const PostList = () => (
         }}
       >
         <TextField source="id" sx={{ width: "50px" }} />
-        <ImageField
+{/*         <ImageField
           source="Imagen"
           title="Imagen del Tour"
           sx={{
@@ -84,7 +110,8 @@ export const PostList = () => (
               boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
             },
           }}
-        />
+        /> */}
+        <MultipleImageField source="Imagenes" />
         <TextField source="Nombre" sx={{ width: "200px" }} />
         <TextField
           source="Descripción"

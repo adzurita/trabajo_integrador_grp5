@@ -22,6 +22,69 @@ import { Grid, Box, Container } from "@mui/material";
 import BookIcon from "@mui/icons-material/Book";
 export const PostIcon = BookIcon;
 import { validatePostCreation } from "../../../../helpers/index";
+import fakeDataProvider from "ra-data-fakerest";
+import Swal from "sweetalert2";
+
+const data = [
+  {
+    id: 1,
+    Nombre: "Aventura en la Selva Amazónica",
+    Destino: "Amazonas, Brasil",
+    Descripción:
+      "Un emocionante tour de 5 días explorando la selva amazónica con guías expertos.",
+    Precio: "1200 USD",
+    Duración: "5 días",
+    Categoría: "Aventura",
+    Imagenes: ["https://wallpaperaccess.com/full/4736716.jpg"],
+    Status: "Disponible",
+  },
+  {
+    id: 2,
+    Nombre: "Tour por las Pirámides de Egipto",
+    Destino: "El Cairo, Egipto",
+    Descripción:
+      "Descubre las antiguas maravillas del mundo con este tour guiado por Egipto.",
+    Precio: "1800 USD",
+    Duración: "7 días",
+    Categoría: "Cultural",
+    Imagenes:
+      ["https://estaticos-cdn.prensaiberica.es/clip/6996649c-c464-4f50-9e30-255c27b2015b_source-aspect-ratio_default_0.jpg"],
+    Status: "Disponible",
+  },
+  {
+    id: 3,
+    Nombre: "Escapada Romántica en París",
+    Destino: "París, Francia",
+    Descripción:
+      "Un tour perfecto para parejas que incluye visitas a los sitios más icónicos de París.",
+    Precio: "2500 USD",
+    Duración: "4 días",
+    Categoría: "Romántico",
+    Imagenes:
+      ["https://www.infinitaeventos.com/contenido/uploads/2019/01/enamorados-paris.jpg"],
+    Status: "Agotado",
+  },
+];
+
+const dataProvider = fakeDataProvider({
+  posts: data,
+});
+
+const validateProductName = async (values) => {
+  const existingProduct = data.find(
+    (post) => post.Nombre.toLowerCase() === values.Nombre.toLowerCase()
+  );
+
+  if (existingProduct) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Ya existe un producto con este nombre.",
+    });
+
+    return { nombre: "Ya existe un producto con ese nombre." };
+  }
+};
 
 export const PostCreate = () => (
   <Create
@@ -34,17 +97,20 @@ export const PostCreate = () => (
     label="Crear producto"
   >
     <Container sx={{ display: "flex", alignItems: "center" }}>
-      <SimpleForm toolbar={false} validate={validatePostCreation}>
+      <SimpleForm
+        toolbar={false}
+        validate={ validatePostCreation &&  validateProductName}
+      >
         <Grid container spacing={2}>
           {/* Nombre */}
           <Grid item xs={12} sm={6}>
-            <TextInput source="nombre" label="Nombre" fullWidth />
+            <TextInput source="Nombre" label="Nombre" fullWidth />
           </Grid>
 
           {/* Status */}
           <Grid item xs={12} sm={6}>
             <SelectInput
-              source="categoria"
+              source="Categoría"
               label="Categoría"
               defaultValue="todas"
               choices={[
@@ -60,18 +126,23 @@ export const PostCreate = () => (
 
           {/* Descripción */}
           <Grid item xs={12}>
-            <TextInput source="descripcion" label="Descripción" fullWidth multiline />
+            <TextInput
+              source="Descripcion"
+              label="Descripción"
+              fullWidth
+              multiline
+            />
           </Grid>
 
           {/* Precio */}
           <Grid item xs={12} sm={6}>
-            <TextInput source="precio" label="Precio" fullWidth />
+            <TextInput source="Precio" label="Precio" fullWidth />
           </Grid>
 
           {/* Status */}
           <Grid item xs={12} sm={6}>
             <SelectInput
-              source="status"
+              source="Status"
               label="Estado"
               defaultValue="disponible"
               choices={[
@@ -84,7 +155,7 @@ export const PostCreate = () => (
 
           {/* Múltiples URLs de imágenes */}
           <Grid item xs={12}>
-            <ArrayInput source="imagenes" label="Imágenes (URLs)">
+            <ArrayInput source="Imagenes" label="Imágenes (URLs)">
               <SimpleFormIterator>
                 <TextInput label="URL de imagen" />
               </SimpleFormIterator>
