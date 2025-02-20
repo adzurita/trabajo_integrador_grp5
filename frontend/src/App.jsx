@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Home, Admin } from "./pages/index";
 import { Header } from "./components/index";
 import "./App.css";
+import { ProductDetail } from "./components/detailProduct/detailProduct";
 
 function App() {
   return (
@@ -11,9 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
-        {/*         <Route path="/recomendaciones" element={<RecomendacionesPage />} />
-        <Route path="/explora" element={<ExploraPage />} /> 
-        <Route path="*" element={<NotFoundPage />} />*/}
+        <Route path="/product/:id" element={<ProductDetail />} />
+        {/*<Route path="*" element={<NotFoundPage />} />*/}
       </Routes>
     </>
   );
