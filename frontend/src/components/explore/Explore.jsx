@@ -1,47 +1,8 @@
-// import { useState } from "react";
-// import { TextField, Button, Grid } from "@mui/material";
-
-// const categories = ["Todos", "Categoría 1", "Categoría 2", "Categoría 3"];
-
-// export const Explore = () => {
-//   const [selectedCategory, setSelectedCategory] = useState("Todos");
-//   const [search, setSearch] = useState("");
-
-//   return (
-//     <div>
-//       <h2>Explora</h2>
-//       <TextField
-//         label="Buscar"
-//         variant="outlined"
-//         fullWidth
-//         onChange={(e) => setSearch(e.target.value)}
-//       />
-//       <Grid container spacing={2} sx={{ marginTop: 2 }}>
-//         {categories.map((cat) => (
-//           <Grid item key={cat}>
-//             <Button
-//               variant={selectedCategory === cat ? "contained" : "outlined"}
-//               onClick={() => setSelectedCategory(cat)}
-//             >
-//               {cat}
-//             </Button>
-//           </Grid>
-//         ))}
-//       </Grid>
-//       <div>
-//         <p>Mostrando productos de la categoría: {selectedCategory}</p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// // export default Explore;s
-
-
-import React, { useState, useEffect } from "react";
-import { Box, TextField, Button, Typography, Pagination, Grid, Rating } from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, TextField, Button, Typography, Pagination, Grid, Rating, InputAdornment } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Search } from "@mui/icons-material";
 
 const categories = ["Todos", "Aventura", "Gastronomía", "Bienestar", "Cultura"];
 
@@ -80,12 +41,23 @@ export const Explore = () => {
         <Typography sx={{ fontFamily: "Outfit", fontWeight: 700, fontSize: "40px", lineHeight: "50.4px" }}>
           Explora más
         </Typography>
-        <TextField
-          label="Buscar"
-          variant="outlined"
-          size="small"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <TextField
+            variant="outlined"
+            size="small"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search sx={{ color: "#00CED1" }} />
+                </InputAdornment>
+              )
+            }}
+          />
+          <Button variant="contained" sx={{ bgcolor: "#00CED1", color: "white" }}>
+            Buscar
+          </Button>
+        </Box>
       </Box>
       <Box sx={{ display: "flex", gap: 1, overflowX: "auto", mb: 3 }}>
         {categories.map((category) => (
@@ -93,6 +65,7 @@ export const Explore = () => {
             key={category}
             variant={selectedCategory === category ? "contained" : "outlined"}
             onClick={() => setSelectedCategory(category)}
+            sx={{ borderColor: "#00CED1", backgroundColor: selectedCategory === category ? "#00CED1" : "#ffffff",  color: selectedCategory === category ? "#ffffff" : "#00CED1"}}
           >
             {category}
           </Button>

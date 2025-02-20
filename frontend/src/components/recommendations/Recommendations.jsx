@@ -50,7 +50,7 @@ export const Recommendations = () => {
   };
 
   return (
-    <Box sx={{ mt: 4, width: "95%"}}>
+    <Box sx={{ mt: 4, width: "90%"}}>
       <Typography 
         variant="h4" 
         sx={{ 
@@ -61,14 +61,16 @@ export const Recommendations = () => {
           letterSpacing: "0%", 
           mb: 3, 
           textAlign: 'left', 
-          marginLeft: 10
+          // 
         }}
       >
         Las experiencias más recomendadas
       </Typography>
       <Box className="container" sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
         <IconButton onClick={prevSlide} disabled={index === 0}>
-          <ArrowBackIos />
+          <Box sx={{borderRadius: '50%', backgroundColor: "#00CED1", padding: 2}}>
+            <ArrowBackIos sx={{color: '#ffffff'}}/>
+          </Box>
         </IconButton>
         <Box sx={{ display: "flex", overflow: "hidden", gap: 2, width: "90vw", justifyContent: "center" }}>
           {products.slice(index, index + visibleCards).map((product) => (
@@ -90,13 +92,15 @@ export const Recommendations = () => {
                   <Typography variant="body2">📍 Ubicación</Typography>
                   <Typography variant="h6" fontWeight="bold">{product.price}</Typography>
                 </Box>
-                <Button variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>Reservar</Button>
+                <Button variant="contained" fullWidth sx={{ mt: 2, backgroundColor:"#00CED1" }}>Reservar</Button>
               </CardContent>
             </Card>
           ))}
         </Box>
         <IconButton onClick={nextSlide} disabled={index >= products.length - visibleCards}>
-          <ArrowForwardIos />
+          <Box sx={{borderRadius: '50%', backgroundColor: "#00CED1", padding: 2}}>
+            <ArrowForwardIos sx={{color: '#ffffff'}} />
+          </Box>
         </IconButton>
       </Box>
     </Box>
