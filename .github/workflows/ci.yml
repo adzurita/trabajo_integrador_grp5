@@ -1,4 +1,4 @@
-name: CI GRP5 Pipeline
+name: Backend CI
 
 on:
   push:
@@ -10,18 +10,8 @@ on:
 jobs:
   build-backend:
     runs-on: ubuntu-latest
-    # Condición para que se ejecute solo en push/PR a main o manual en develop
-    if: >
-      (
-        (github.event_name == 'push' || github.event_name == 'pull_request')
-        && github.ref == 'refs/heads/main'
-      )
-      || (
-        github.event_name == 'workflow_dispatch'
-        && github.ref == 'refs/heads/develop'
-      )
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Cache Maven dependencies
@@ -36,45 +26,10 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: '17'  # Ajusta a la versión que uses (17, 20, 23, etc.)
+          # Si en tu POM tienes <java.version>23</java.version>, usa '23'.
+          # Cambia a '17' o '20' si prefieres otra versión.
+          java-version: '23'
 
-      - name: Build backend
+      - name: Build with Maven
         working-directory: backend
         run: mvn clean install
-
-  build-frontend:
-    runs-on: ubuntu-latest
-    # Mismo if que en build-backend
-    if: >
-      (
-        (github.event_name == 'push' || github.event_name == 'pull_request')
-        && github.ref == 'refs/heads/main'
-      )
-      || (
-        github.event_name == 'workflow_dispatch'
-        && github.ref == 'refs/heads/develop'
-      )
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Cache Node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install frontend dependencies
-        working-directory: frontend
-        run: npm install
-
-      - name: Build frontend
-        working-directory: frontend
-        run: npm run build
