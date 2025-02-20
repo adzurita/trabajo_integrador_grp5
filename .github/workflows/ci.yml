@@ -1,0 +1,80 @@
+name: CI GRP5 Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    # Condición para que se ejecute solo en push/PR a main o manual en develop
+    if: >
+      (
+        (github.event_name == 'push' || github.event_name == 'pull_request')
+        && github.ref == 'refs/heads/main'
+      )
+      || (
+        github.event_name == 'workflow_dispatch'
+        && github.ref == 'refs/heads/develop'
+      )
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/backend/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '17'  # Ajusta a la versión que uses (17, 20, 23, etc.)
+
+      - name: Build backend
+        working-directory: backend
+        run: mvn clean install
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    # Mismo if que en build-backend
+    if: >
+      (
+        (github.event_name == 'push' || github.event_name == 'pull_request')
+        && github.ref == 'refs/heads/main'
+      )
+      || (
+        github.event_name == 'workflow_dispatch'
+        && github.ref == 'refs/heads/develop'
+      )
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
