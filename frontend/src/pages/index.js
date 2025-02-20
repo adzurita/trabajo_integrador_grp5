@@ -1,2 +1,2 @@
 export { Home } from "./home/Home";
-export { Admin } from "./admin/Admin";
+export { AdminPage } from "./admin/Admin";
