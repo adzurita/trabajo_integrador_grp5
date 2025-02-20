@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI BACKEND Pipeline
 
 on:
   push:
@@ -22,8 +22,5 @@ jobs:
           cache: 'maven'
 
       - name: Build and test
-        run: mvn -f backend/pom.xml clean verify
-        # o bien:
-        # run: |
-        #   cd backend
-        #   mvn clean verify
+        run: mvn -4 -f backend/pom.xml clean install
+       
