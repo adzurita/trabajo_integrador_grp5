@@ -22,5 +22,5 @@ jobs:
           cache: 'maven'
 
       - name: Build and test
-        run: mvn -4 -f backend/pom.xml clean install
+        run: mvn -T 4 -f backend/pom.xml clean install
        
