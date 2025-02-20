@@ -5,7 +5,8 @@ import {
   nanoDarkTheme,
   Menu,
   Layout,
-  useTheme,
+
+
 } from "react-admin";
 import fakeDataProvider from "ra-data-fakerest";
 import { PostList, PostEdit, PostCreate, PostIcon } from "./components/index";
@@ -13,15 +14,15 @@ import LabelIcon from "@mui/icons-material/Label";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import AutoAwesomeMotionRoundedIcon from "@mui/icons-material/AutoAwesomeMotionRounded";
 
+
 export const MyMenu = () => {
-  const theme = useTheme();
+
   return (
     <Menu
       sx={{
         backgroundColor: "#D9D9D9",
         color: "white",
-
-        height: "100%",
+        height: "100vh",
         overflowY: "auto",
       }}
     >
@@ -38,6 +39,8 @@ export const MyMenu = () => {
     </Menu>
   );
 };
+
+
 
 export const MyLayout = ({ children }) => (
   <Layout menu={MyMenu}>{children}</Layout>
@@ -101,6 +104,7 @@ export const AdminPage = () => {
         edit={PostEdit}
         create={PostCreate}
         icon={PostIcon}
+        sx={{border:"2px solid red"}}
       />
     </Admin>
   );

@@ -42,7 +42,13 @@ const CustomListActions = () => (
 
 export const PostList = () => (
   <List
-    sx={{ height: "80vh", display: "flex", alignItems: "center", width: "90%" }}
+    sx={{
+      height: "80vh",
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+      justifyContent: "center",
+    }}
     title="Lista de productos"
     actions={<CustomListActions />}
   >
