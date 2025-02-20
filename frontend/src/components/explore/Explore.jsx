@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Box, TextField, Button, Typography, Pagination, Grid, Rating, InputAdornment } from "@mui/material";
+import { Box, TextField, Button, Typography, Pagination, Rating, InputAdornment, Stack } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Search } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const categories = ["Todos", "Aventura", "Gastronomía", "Bienestar", "Cultura"];
 
@@ -24,6 +25,7 @@ export const Explore = () => {
   const [filteredProducts, setFilteredProducts] = useState(dummyProducts);
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
+  const navigate = useNavigate();
 
   useEffect(() => {
     let filtered = dummyProducts.filter(
@@ -34,6 +36,10 @@ export const Explore = () => {
     setFilteredProducts(filtered);
     setPage(1);
   }, [searchTerm, selectedCategory]);
+
+  const handleCardClick = (id) => {
+    navigate(`/product/${id}`);
+  }
 
   return (
     <Box sx={{ width: "87%", margin: "0 auto", mt: 4 }}>
@@ -71,30 +77,44 @@ export const Explore = () => {
           </Button>
         ))}
       </Box>
-      <Grid container spacing={3}>
+      <Stack direction="row" flexWrap="wrap" gap={3} justifyContent="center">
         {filteredProducts.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((product) => (
-          <Grid item xs={12} sm={6} md={4} key={product.id}>
-            <Box sx={{ borderRadius: "16px", boxShadow: 3, overflow: "hidden" }}>
-              <img src={product.image} alt={product.name} style={{ width: "100%", height: 220, objectFit: "cover" }} />
-              <Box sx={{ p: 2 }}>
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <CalendarMonthIcon sx={{ fontSize: 16, color: "gray" }} />
-                    <Typography variant="body2" color="textSecondary">{product.date}</Typography>
-                  </Box>
-                  <Rating value={parseFloat(product.rating)} precision={0.1} readOnly size="small" />
+          <Box
+            key={product.id}
+            onClick={() => handleCardClick(product.id)}
+            sx={{
+              width: { xs: "100%", sm: "48%", md: "30%" },
+              borderRadius: "16px",
+              boxShadow: 3,
+              overflow: "hidden",
+              cursor: "pointer",
+              transition: "transform 0.2s",
+              "&:hover": { transform: "scale(1.05)" }
+            }}
+          >
+            <img 
+              src={product.image} 
+              alt={product.name} 
+              style={{ width: "100%", height: 220, objectFit: "cover" }} 
+            />
+            <Box sx={{ p: 2 }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <CalendarMonthIcon sx={{ fontSize: 16, color: "gray" }} />
+                  <Typography variant="body2" color="textSecondary">{product.date}</Typography>
                 </Box>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>{product.name}</Typography>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-                  <LocationOnIcon sx={{ fontSize: 16, color: "gray" }} />
-                  <Typography variant="body2" color="textSecondary">{product.location}</Typography>
-                </Box>
-                <Typography variant="h6" fontWeight="bold" sx={{ mt: 1 }}>{product.price}</Typography>
+                <Rating value={parseFloat(product.rating)} precision={0.1} readOnly size="small" />
               </Box>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>{product.name}</Typography>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+                <LocationOnIcon sx={{ fontSize: 16, color: "gray" }} />
+                <Typography variant="body2" color="textSecondary">{product.location}</Typography>
+              </Box>
+              <Typography variant="h6" fontWeight="bold" sx={{ mt: 1 }}>{product.price}</Typography>
             </Box>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Stack>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Pagination count={Math.ceil(filteredProducts.length / itemsPerPage)} page={page} onChange={(_, value) => setPage(value)} />
       </Box>
