@@ -1,6 +1,47 @@
-import { Admin, Resource, nanoLightTheme, nanoDarkTheme } from "react-admin";
+import {
+  Admin,
+  Resource,
+  nanoLightTheme,
+  nanoDarkTheme,
+  Menu,
+  Layout,
+  useTheme,
+} from "react-admin";
 import fakeDataProvider from "ra-data-fakerest";
 import { PostList, PostEdit, PostCreate, PostIcon } from "./components/index";
+import LabelIcon from "@mui/icons-material/Label";
+import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
+import AutoAwesomeMotionRoundedIcon from "@mui/icons-material/AutoAwesomeMotionRounded";
+
+export const MyMenu = () => {
+  const theme = useTheme();
+  return (
+    <Menu
+      sx={{
+        backgroundColor: "#D9D9D9",
+        color: "white",
+
+        height: "100%",
+        overflowY: "auto",
+      }}
+    >
+      <Menu.Item
+        to="/admin/posts/create"
+        primaryText="Crear Producto"
+        leftIcon={<AddBoxRoundedIcon />}
+      />
+      <Menu.Item
+        to="/admin/posts"
+        primaryText="Listado de productos"
+        leftIcon={<AutoAwesomeMotionRoundedIcon />}
+      />
+    </Menu>
+  );
+};
+
+export const MyLayout = ({ children }) => (
+  <Layout menu={MyMenu}>{children}</Layout>
+);
 
 export const AdminPage = () => {
   const dataProvider = fakeDataProvider({
@@ -52,6 +93,7 @@ export const AdminPage = () => {
       dataProvider={dataProvider}
       theme={nanoLightTheme}
       darkTheme={nanoLightTheme}
+      layout={MyLayout}
     >
       <Resource
         name="posts"

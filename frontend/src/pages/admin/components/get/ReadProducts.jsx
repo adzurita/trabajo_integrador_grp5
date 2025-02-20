@@ -91,9 +91,10 @@ export const PostList = () => (
         />
         <TextField source="Precio" />
         <TextField source="Categoría" />
-        <TextField source="Status" />
+        <TextField source="Status" label="Disponibilidad" />
 
         <EditButton
+          source="Acciones"
           sx={{
             backgroundColor: "#00CED1",
             borderRadius: "10px",
