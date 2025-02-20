@@ -18,9 +18,33 @@ import { Box } from "@mui/material";
 
 export const PostIcon = BookIcon;
 
+import { TopToolbar, CreateButton } from "react-admin";
+
+const CustomListActions = () => (
+  <TopToolbar>
+    <CreateButton
+      label="Registrar nuevo producto"
+      sx={{
+        backgroundColor: "#00CED1",
+        borderRadius: "10px",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        padding: "5px 20px",
+        fontWeight: "bold",
+        textTransform: "none",
+        width: "100%",
+        "&:hover": {
+          backgroundColor: "#00B3B3",
+        },
+      }}
+    />
+  </TopToolbar>
+);
+
 export const PostList = () => (
   <List
     sx={{ height: "80vh", display: "flex", alignItems: "center", width: "90%" }}
+    title="Lista de productos"
+    actions={<CustomListActions />}
   >
     <Box>
       <Datagrid
@@ -39,7 +63,7 @@ export const PostList = () => (
           },
         }}
       >
-        <TextField source="id"sx={{ width: "50px" }}/>
+        <TextField source="id" sx={{ width: "50px" }} />
         <ImageField
           source="Imagen"
           title="Imagen del Tour"
@@ -55,7 +79,7 @@ export const PostList = () => (
             },
           }}
         />
-        <TextField source="Nombre" sx={{ width: "200px" }}/>
+        <TextField source="Nombre" sx={{ width: "200px" }} />
         <TextField
           source="Descripción"
           sx={{

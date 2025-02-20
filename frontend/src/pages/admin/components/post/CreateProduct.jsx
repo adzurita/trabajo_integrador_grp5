@@ -15,6 +15,8 @@ import {
   Form,
   SaveButton,
   SelectInput,
+  ArrayInput,
+  SimpleFormIterator,
 } from "react-admin";
 import { Grid, Box, Container } from "@mui/material";
 import BookIcon from "@mui/icons-material/Book";
@@ -29,28 +31,49 @@ export const PostCreate = () => (
       alignItems: "center",
       justifyContent: "center",
     }}
+    label="Crear producto"
   >
-    <Container sx={{ height: "55vh", display: "flex", alignItems: "center" }}>
-      <Form validate={validatePostCreation}>
+    <Container sx={{ display: "flex", alignItems: "center" }}>
+      <SimpleForm toolbar={false} validate={validatePostCreation}>
         <Grid container spacing={2}>
+          {/* Nombre */}
           <Grid item xs={12} sm={6}>
-            <TextInput source="Imagen" label="Url de la imagen" fullWidth />
+            <TextInput source="nombre" label="Nombre" fullWidth />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextInput source="Nombre" fullWidth />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextInput source="Descripción" fullWidth />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextInput source="Precio" fullWidth />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextInput source="Categoría" fullWidth />
-          </Grid>
+
+          {/* Status */}
           <Grid item xs={12} sm={6}>
             <SelectInput
-              source="Status"
+              source="categoria"
+              label="Categoría"
+              defaultValue="todas"
+              choices={[
+                { id: "aventura", name: "Aventura" },
+                { id: "gastronomia", name: "Gastronomía" },
+                { id: "bienestar", name: "Bienestar" },
+                { id: "cultura", name: "Cultura" },
+                { id: "todas", name: "Todas" },
+              ]}
+              fullWidth
+            />
+          </Grid>
+
+          {/* Descripción */}
+          <Grid item xs={12}>
+            <TextInput source="descripcion" label="Descripción" fullWidth multiline />
+          </Grid>
+
+          {/* Precio */}
+          <Grid item xs={12} sm={6}>
+            <TextInput source="precio" label="Precio" fullWidth />
+          </Grid>
+
+          {/* Status */}
+          <Grid item xs={12} sm={6}>
+            <SelectInput
+              source="status"
+              label="Estado"
+              defaultValue="disponible"
               choices={[
                 { id: "disponible", name: "Disponible" },
                 { id: "no_disponible", name: "No disponible" },
@@ -58,6 +81,17 @@ export const PostCreate = () => (
               fullWidth
             />
           </Grid>
+
+          {/* Múltiples URLs de imágenes */}
+          <Grid item xs={12}>
+            <ArrayInput source="imagenes" label="Imágenes (URLs)">
+              <SimpleFormIterator>
+                <TextInput label="URL de imagen" />
+              </SimpleFormIterator>
+            </ArrayInput>
+          </Grid>
+
+          {/* Botón Crear */}
           <Grid item xs={12} display="flex" justifyContent="center">
             <Box mt={2}>
               <SaveButton
@@ -78,7 +112,7 @@ export const PostCreate = () => (
             </Box>
           </Grid>
         </Grid>
-      </Form>
+      </SimpleForm>
     </Container>
   </Create>
 );

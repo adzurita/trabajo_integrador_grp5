@@ -1,19 +1,22 @@
 export const validatePostCreation = (values) => {
-    const errors = {};
-    const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
-  
-    if (!values.Imagen || !urlPattern.test(values.Imagen)) {
-      errors.Imagen = "Debe ser una URL válida de imagen";
-    }
-    if (!values.Nombre || values.Nombre.length < 5) {
-      errors.Nombre = "El nombre debe tener al menos 5 caracteres";
-    }
-    if (!values.Descripción || values.Descripción.length < 5) {
-      errors.Descripción = "La descripción debe tener al menos 5 caracteres";
-    }
-    if (!values.Precio || isNaN(values.Precio)) {
-      errors.Precio = "El precio debe ser un número válido";
-    }
-  
-    return errors;
-  };
+  const errors = {};
+  const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
+
+  if (!values.imagenes || !Array.isArray(values.imagenes) || values.imagenes.some((img) => !urlPattern.test(img))) {
+    errors.imagenes = "Todas las imágenes deben ser URLs válidas.";
+  }
+
+  if (!values.nombre || values.nombre.length < 5) {
+    errors.nombre = "El nombre debe tener al menos 5 caracteres.";
+  }
+
+  if (!values.descripcion || values.descripcion.length < 5) {
+    errors.descripcion = "La descripción debe tener al menos 5 caracteres.";
+  }
+
+  if (!values.precio || isNaN(Number(values.precio))) {
+    errors.precio = "El precio debe ser un número válido.";
+  }
+
+  return errors;
+};

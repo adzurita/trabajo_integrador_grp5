@@ -40,14 +40,17 @@ export const Header = () => {
   };
 
   return (
-    <AppBar position="static" elevation="0" sx={{ backgroundColor: "#F3F4F6" }}>
+    <AppBar position="fixed" elevation="0" sx={{ backgroundColor: "#F3F4F6" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <a href="/">
+
           <img
             src="src/assets/logo.svg"
             alt="logo xplora+"
             style={{ width: "150px", height: "auto" }}
           />
+          </a>
 
           <Box
             sx={{
