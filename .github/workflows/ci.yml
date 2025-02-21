@@ -1,4 +1,4 @@
-name: CI BACKEND Pipeline
+name: CI Pipeline
 
 on:
   push:
@@ -7,21 +7,42 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-and-test:
+  build-backend:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up JDK 23
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '23'
-          cache: maven
+          java-version: '17'
+          cache: 'maven'
 
+      - name: Build and test backend
+        run: mvn -f backend/pom.xml clean verify
 
-      - name: Build and test
-        run: mvn -T 4 -f backend/pom.xml clean install
-       
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Lint
+        run: npm run lint
+        working-directory: frontend
+
+      - name: Build
+        run: npm run build
+        working-directory: frontend
