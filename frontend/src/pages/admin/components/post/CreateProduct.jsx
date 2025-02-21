@@ -95,31 +95,33 @@ export const validatePostCreation = (values) => {
   return errors;
 };
 
-export const PostCreate = () => {
-  const handleSubmit = async (values) => {
-    // Verificar si el nombre ya existe
-    const existingProduct = data.find(
-      (post) => post.Nombre?.toLowerCase() === values.Nombre?.toLowerCase()
-    );
+const handleSubmit = async (values) => {
+  // Verificar si el nombre ya existe
+  const existingProduct = data.find(
+    (post) => post.Nombre?.toLowerCase() === values.Nombre?.toLowerCase()
+  );
 
-    if (existingProduct) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Ya existe un producto con este nombre.",
-      });
-      return;
-    }
-
-    // Mostrar alerta de éxito
+  if (existingProduct) {
     Swal.fire({
-      icon: "success",
-      title: "Éxito",
-      text: "Producto creado correctamente.",
+      icon: "error",
+      title: "Error",
+      text: "Ya existe un producto con este nombre.",
     });
+    throw new Error("Ya existe un producto con este nombre.");
+    return;
+  }
 
-    console.log("Enviando datos:", values);
-  };
+  // Mostrar alerta de éxito
+  Swal.fire({
+    icon: "success",
+    title: "Éxito",
+    text: "Producto creado correctamente.",
+  });
+
+  console.log("Enviando datos:", values);
+};
+
+export const PostCreate = () => {
 
   return (
     <Create
@@ -132,7 +134,7 @@ export const PostCreate = () => {
       label="Crear producto"
     >
       <Container sx={{ display: "flex", alignItems: "center" }}>
-        <SimpleForm toolbar={false} validate={validatePostCreation} onSubmit={handleSubmit}>
+        <SimpleForm toolbar={false} validate={handleSubmit} /* onSubmit={handleSubmit} */>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextInput source="Nombre" label="Nombre" fullWidth />
@@ -155,7 +157,7 @@ export const PostCreate = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <TextInput source="Descripcion" label="Descripción" fullWidth multiline />
+              <TextInput source="Descripción" label="Descripción" fullWidth multiline />
             </Grid>
 
             <Grid item xs={12} sm={6}>

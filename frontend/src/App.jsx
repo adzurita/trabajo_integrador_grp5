@@ -9,11 +9,9 @@ function App() {
   const isMobileDevice = () => window.innerWidth <= 768;
   return (
     <>
-      {!location.pathname.startsWith("/admin") && !isMobileDevice() ? (
+      {!location.pathname.startsWith("/admin") && 
         <Header />
-      ) : (
-        <HeaderMobile />
-      )}
+      }
       {/* {!location.pathname.startsWith("/admin") && <HeaderMobile />} */}
 
       <Routes>

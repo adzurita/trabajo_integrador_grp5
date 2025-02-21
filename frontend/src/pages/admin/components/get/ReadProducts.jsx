@@ -115,6 +115,7 @@ export const PostList = () => (
         <TextField source="Nombre" sx={{ width: "200px" }} />
         <TextField
           source="Descripción"
+          label="Descripción"
           sx={{
             maxWidth: "300px",
             whiteSpace: "nowrap",
