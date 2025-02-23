@@ -42,12 +42,12 @@ export const Explore = () => {
   }
 
   return (
-    <Box sx={{ width: "87%", margin: "0 auto", mt: 4 }}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+    <Box sx={{ width: "100%", margin: "0 auto", mt: 4 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3, flexWrap: "wrap", gap: 2 }}>
         <Typography sx={{ fontFamily: "Outfit", fontWeight: 700, fontSize: "40px", lineHeight: "50.4px" }}>
           Explora más
         </Typography>
-        <Box sx={{ display: "flex", gap: 1 }}>
+        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
           <TextField
             variant="outlined"
             size="small"
@@ -65,25 +65,24 @@ export const Explore = () => {
           </Button>
         </Box>
       </Box>
-      <Box sx={{ display: "flex", gap: 1, overflowX: "auto", mb: 3 }}>
+      <Box sx={{ display: "flex", gap: 1, overflowX: "auto", mb: 3, flexWrap: "wrap" }}>
         {categories.map((category) => (
           <Button
             key={category}
             variant={selectedCategory === category ? "contained" : "outlined"}
             onClick={() => setSelectedCategory(category)}
-            sx={{ borderColor: "#00CED1", backgroundColor: selectedCategory === category ? "#00CED1" : "#ffffff",  color: selectedCategory === category ? "#ffffff" : "#00CED1"}}
+            sx={{ borderColor: "#00CED1", backgroundColor: selectedCategory === category ? "#00CED1" : "#ffffff",  color: selectedCategory === category ? "#ffffff" : "#00CED1" }}
           >
             {category}
           </Button>
         ))}
       </Box>
-      <Stack direction="row" flexWrap="wrap" gap={3} justifyContent="center">
+      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }, padding: {xs:''}, gap: 3 }}>
         {filteredProducts.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((product) => (
           <Box
             key={product.id}
             onClick={() => handleCardClick(product.id)}
             sx={{
-              width: { xs: "100%", sm: "48%", md: "30%" },
               borderRadius: "16px",
               boxShadow: 3,
               overflow: "hidden",
@@ -114,7 +113,8 @@ export const Explore = () => {
             </Box>
           </Box>
         ))}
-      </Stack>
+      
+      </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Pagination count={Math.ceil(filteredProducts.length / itemsPerPage)} page={page} onChange={(_, value) => setPage(value)} />
       </Box>

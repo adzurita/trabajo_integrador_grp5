@@ -41,11 +41,11 @@ export const ProductDetail = () => {
     return (
         <Box sx={{ width: "90%", margin: "0 auto", mt: 4 }}>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={8} sx={{ mt: 6 }}>
                     <img src={product.images[0]} alt="Principal" style={{ width: "100%", height: 400, objectFit: "cover", borderRadius: "8px" }} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <Grid container spacing={1}>
+                    <Grid container spacing={1} sx={{ mt: 5 }}>
                         {product.images.slice(1).map((img, index) => (
                             <Grid item xs={6} key={index}>
                                 <img src={img} alt={`random ${index + 1}`} style={{ width: "100%", height: 194, objectFit: "cover", borderRadius: "8px" }} />
@@ -77,7 +77,7 @@ export const ProductDetail = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <Box sx={{ p: 3, backgroundColor: "white", borderRadius: "8px", boxShadow: 3 }}>
+                    <Box sx={{ p: 3, backgroundColor: "white", borderRadius: "8px", boxShadow: 3, mb: 5 }}>
                         <Typography variant="h6" fontWeight="bold">Reserva tu experiencia</Typography>
                         <Box sx={{ backgroundColor: "white", p: 3, borderRadius: 2 }}>
                             <FormControl fullWidth sx={{ mb: 2 }}>

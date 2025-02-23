@@ -5,7 +5,7 @@ import { Explore } from "../../components/explore/Explore";
 
 export const Home = () => {
   return (
-    <Box
+    <Box id="home"
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -15,11 +15,10 @@ export const Home = () => {
       }}
     >
       <ImageSlider />
-
-      <Box id="recomendaciones">
+      <Box id="recomendaciones" sx={{ width: '90%' }}>
         <Recommendations />
       </Box>
-      <Box id="explora">
+      <Box id="explora" sx={{ width: '90%' }}>
         <Explore />
       </Box>
     </Box>

@@ -49,17 +49,29 @@ export const ImageSlider = () => {
   };
 
   return (
-    <Box sx={{ position: "relative", width: "100%", overflow: "hidden" }}>
+    <Box sx={{ 
+      position: "relative", 
+      width: "90%", 
+      margin: "auto", 
+      overflow: "hidden",
+      mt: 4,
+      mb: 4
+    }}>
       <Slider {...settings}>
         {images.map((src, index) => (
           <Box key={index} sx={{ position: "relative" }}>
             <img
               src={src}
               alt={`Slide ${index + 1}`}
-              style={{ width: "100%", height: "500px", objectFit: "cover" }}
+              style={{ 
+                width: "100%", 
+                height: "400px",
+                borderRadius: 10, 
+                objectFit: "cover" 
+              }}
             />
             <Typography
-              variant="h4"
+              variant="h5"
               sx={{
                 position: "absolute",
                 top: "50%",
@@ -70,7 +82,8 @@ export const ImageSlider = () => {
                 textAlign: "center",
                 backgroundColor: "rgba(0, 0, 0, 0.5)",
                 padding: "10px 20px",
-                borderRadius: "8px"
+                borderRadius: "8px",
+                width: "80%"
               }}
             >
               Más aventura, más sabor, más momentos inolvidables

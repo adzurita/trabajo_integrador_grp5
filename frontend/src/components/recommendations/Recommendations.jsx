@@ -50,34 +50,30 @@ export const Recommendations = () => {
   };
 
   return (
-    <Box sx={{ mt: 4, width: "90%"}}>
+    <Box sx={{ mt: 4, width: "100%", margin: "0 auto" }}>
       <Typography 
         variant="h4" 
         sx={{ 
           fontFamily: "Outfit", 
           fontWeight: 700, 
-          fontSize: "40px", 
-          lineHeight: "50.4px", 
-          letterSpacing: "0%", 
-          mb: 3, 
-          textAlign: 'left', 
-          // 
+          fontSize: { xs: "24px", sm: "30px", md: "40px" },
+          textAlign: "left",
+          // pl: '40px', 
+          mb: 3 
         }}
       >
         Las experiencias más recomendadas
       </Typography>
-      <Box className="container" sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
         <IconButton onClick={prevSlide} disabled={index === 0}>
-          <Box sx={{borderRadius: '50%', backgroundColor: "#00CED1", padding: 2}}>
-            <ArrowBackIos sx={{color: '#ffffff'}}/>
-          </Box>
+          <ArrowBackIos />
         </IconButton>
-        <Box sx={{ display: "flex", overflow: "hidden", gap: 2, width: "90vw", justifyContent: "center" }}>
+        <Box sx={{ display: "flex", overflow: "hidden", gap: 2, width: "100%", justifyContent: "center" }}>
           {products.slice(index, index + visibleCards).map((product) => (
-            <Card key={product.id} sx={{ flex: "1 0 auto", maxWidth: "30%", borderRadius: "16px", boxShadow: 3 }}>
+            <Card key={product.id} sx={{ flex: "1 0 auto", maxWidth: "100%", minWidth: { xs: "100%", sm: "48%", md: "30%" }, borderRadius: "16px", boxShadow: 3 }}>
               <CardMedia
                 component="img"
-                sx={{ height: 220, width: "100%", objectFit: "cover", borderTopLeftRadius: "16px", borderTopRightRadius: "16px" }}
+                sx={{ height: 220, width: "100%", objectFit: "cover" }}
                 image={product.image}
                 alt={product.name}
               />
@@ -98,9 +94,7 @@ export const Recommendations = () => {
           ))}
         </Box>
         <IconButton onClick={nextSlide} disabled={index >= products.length - visibleCards}>
-          <Box sx={{borderRadius: '50%', backgroundColor: "#00CED1", padding: 2}}>
-            <ArrowForwardIos sx={{color: '#ffffff'}} />
-          </Box>
+          <ArrowForwardIos />
         </IconButton>
       </Box>
     </Box>

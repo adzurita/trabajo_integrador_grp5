@@ -6,7 +6,6 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { Link } from "react-scroll";
 
-// const pages = ["Home", "Recomendaciones", "Explora"];
 const pages = [
   { name: "Home", id: "home" },
   { name: "Recomendaciones", id: "recomendaciones" },
@@ -41,7 +40,7 @@ export const Header = () => {
 
   return (
     <AppBar position="fixed" elevation="0" sx={{ backgroundColor: "#F3F4F6" }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ width: '90%', padding: '0 !important' }}>
         <Toolbar disableGutters>
           <a href="/">
 
