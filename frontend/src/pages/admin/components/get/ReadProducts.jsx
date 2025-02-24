@@ -18,9 +18,65 @@ import { Box } from "@mui/material";
 
 export const PostIcon = BookIcon;
 
+import { TopToolbar, CreateButton } from "react-admin";
+
+
+const MultipleImageField = ({ source }) => {
+  const record = useRecordContext();
+  if (!record || !record[source]) return null;
+
+  return (
+    <Box display="flex" gap={1}>
+      {record[source].map((url, index) => (
+        <img
+          key={index}
+          src={url}
+          alt={`Imagen ${index + 1}`}
+          style={{
+            width: "50px",
+            height: "50px",
+            objectFit: "cover",
+            borderRadius: "5px",
+            border: "1px solid #ddd",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
+        />
+      ))}
+    </Box>
+  );
+};
+
+const CustomListActions = () => (
+  <TopToolbar>
+    <CreateButton
+      label="Registrar nuevo producto"
+      sx={{
+        backgroundColor: "#00CED1",
+        borderRadius: "10px",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        padding: "5px 20px",
+        fontWeight: "bold",
+        textTransform: "none",
+        width: "100%",
+        "&:hover": {
+          backgroundColor: "#00B3B3",
+        },
+      }}
+    />
+  </TopToolbar>
+);
+
 export const PostList = () => (
   <List
-    sx={{ height: "80vh", display: "flex", alignItems: "center", width: "90%" }}
+    sx={{
+      height: "80vh",
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+      justifyContent: "center",
+    }}
+    title="Lista de productos"
+    actions={<CustomListActions />}
   >
     <Box>
       <Datagrid
@@ -39,8 +95,8 @@ export const PostList = () => (
           },
         }}
       >
-        <TextField source="id"sx={{ width: "50px" }}/>
-        <ImageField
+        <TextField source="id" sx={{ width: "50px" }} />
+{/*         <ImageField
           source="Imagen"
           title="Imagen del Tour"
           sx={{
@@ -54,10 +110,12 @@ export const PostList = () => (
               boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
             },
           }}
-        />
-        <TextField source="Nombre" sx={{ width: "200px" }}/>
+        /> */}
+        <MultipleImageField source="Imagenes" />
+        <TextField source="Nombre" sx={{ width: "200px" }} />
         <TextField
           source="Descripción"
+          label="Descripción"
           sx={{
             maxWidth: "300px",
             whiteSpace: "nowrap",
@@ -67,9 +125,10 @@ export const PostList = () => (
         />
         <TextField source="Precio" />
         <TextField source="Categoría" />
-        <TextField source="Status" />
+        <TextField source="Status" label="Disponibilidad" />
 
         <EditButton
+          source="Acciones"
           sx={{
             backgroundColor: "#00CED1",
             borderRadius: "10px",
