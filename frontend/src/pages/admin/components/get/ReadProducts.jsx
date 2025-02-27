@@ -34,7 +34,7 @@ const MultipleImageField = ({ source }) => {
       {record[source].map((img, index) => (
         <img
           key={img.id || index}
-          src={img.imageUrl} // Accede a imageUrl
+          src={img.imageUrl} 
           alt={`Imagen ${index + 1}`}
           style={{
             width: "50px",
@@ -75,12 +75,9 @@ export const PostList = () => {
 
   useEffect(() => {
     getProducts().then((data) => {
-      console.log(data);
       setProducts(data);
     });
   }, []);
-
-  console.log("🚀 ~ PostList ~ products:", products);
 
   return (
     <List
@@ -147,7 +144,7 @@ export const PostList = () => {
                 },
               }}
             />
-            <DeleteButton label="Eliminar"/>
+            <DeleteButton label="Eliminar" />
           </Box>
         </Datagrid>
       </Box>

@@ -1,18 +1,7 @@
 import {
-  List,
-  Datagrid,
-  Edit,
   Create,
   SimpleForm,
-  DateField,
-  TextField,
-  EditButton,
   TextInput,
-  DateInput,
-  useRecordContext,
-  ImageInput,
-  ImageField,
-  Form,
   SaveButton,
   SelectInput,
   ArrayInput,
@@ -21,62 +10,18 @@ import {
 import { Grid, Box, Container } from "@mui/material";
 import BookIcon from "@mui/icons-material/Book";
 export const PostIcon = BookIcon;
-import fakeDataProvider from "ra-data-fakerest";
 import Swal from "sweetalert2";
-
-
-const data = [
-  {
-    id: 1,
-    Nombre: "Aventura en la Selva Amazónica",
-    Destino: "Amazonas, Brasil",
-    Descripción:
-      "Un emocionante tour de 5 días explorando la selva amazónica con guías expertos.",
-    Precio: "1200 USD",
-    Duración: "5 días",
-    Categoría: "Aventura",
-    Imagenes: ["https://wallpaperaccess.com/full/4736716.jpg"],
-    Status: "Disponible",
-  },
-  {
-    id: 2,
-    Nombre: "Tour por las Pirámides de Egipto",
-    Destino: "El Cairo, Egipto",
-    Descripción:
-      "Descubre las antiguas maravillas del mundo con este tour guiado por Egipto.",
-    Precio: "1800 USD",
-    Duración: "7 días",
-    Categoría: "Cultural",
-    Imagenes:
-      ["https://estaticos-cdn.prensaiberica.es/clip/6996649c-c464-4f50-9e30-255c27b2015b_source-aspect-ratio_default_0.jpg"],
-    Status: "Disponible",
-  },
-  {
-    id: 3,
-    Nombre: "Escapada Romántica en París",
-    Destino: "París, Francia",
-    Descripción:
-      "Un tour perfecto para parejas que incluye visitas a los sitios más icónicos de París.",
-    Precio: "2500 USD",
-    Duración: "4 días",
-    Categoría: "Romántico",
-    Imagenes:
-      ["https://www.infinitaeventos.com/contenido/uploads/2019/01/enamorados-paris.jpg"],
-    Status: "Agotado",
-  },
-];
-
-const dataProvider = fakeDataProvider({
-  posts: data,
-});
-
-
+import { createProduct } from "../../../../services/productService";
 
 export const validatePostCreation = (values) => {
   const errors = {};
   const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
 
-  if (!values.Imagenes || !Array.isArray(values.Imagenes) || values.Imagenes.some((img) => !urlPattern.test(img))) {
+  if (
+    !values.Imagenes ||
+    !Array.isArray(values.Imagenes) ||
+    values.Imagenes.some((img) => !urlPattern.test(img))
+  ) {
     errors.Imagenes = "Todas las imágenes deben ser URLs válidas.";
   }
 
@@ -95,33 +40,38 @@ export const validatePostCreation = (values) => {
   return errors;
 };
 
-const handleSubmit = async (values) => {
-  // Verificar si el nombre ya existe
-  const existingProduct = data.find(
-    (post) => post.Nombre?.toLowerCase() === values.Nombre?.toLowerCase()
-  );
-
-  if (existingProduct) {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Ya existe un producto con este nombre.",
-    });
-    throw new Error("Ya existe un producto con este nombre.");
-    return;
-  }
-
-  // Mostrar alerta de éxito
-  Swal.fire({
-    icon: "success",
-    title: "Éxito",
-    text: "Producto creado correctamente.",
-  });
-
-  console.log("Enviando datos:", values);
-};
-
 export const PostCreate = () => {
+  const handleSubmit = async (values) => {
+    const productBody = {
+      name: values.Nombre,
+      description: values.Descripción,
+      price: parseFloat(values.Precio),
+      imageSet: values.Imagenes.map((imgUrl) => ({
+        imageUrl: imgUrl,
+        altText: `Imagen de ${values.Nombre}`,
+      })),
+    };
+
+    try {
+      const response = await createProduct(productBody);
+      console.log("🚀 ~ Producto creado:", response);
+      if (!response) {
+        return;
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Éxito",
+        text: "Producto creado correctamente.",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo crear el producto.",
+      });
+    }
+  };
 
   return (
     <Create
@@ -134,7 +84,7 @@ export const PostCreate = () => {
       label="Crear producto"
     >
       <Container sx={{ display: "flex", alignItems: "center" }}>
-        <SimpleForm toolbar={false} validate={handleSubmit} /* onSubmit={handleSubmit} */>
+        <SimpleForm toolbar={false} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextInput source="Nombre" label="Nombre" fullWidth />
@@ -157,27 +107,20 @@ export const PostCreate = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <TextInput source="Descripción" label="Descripción" fullWidth multiline />
+              <TextInput
+                source="Descripción"
+                label="Descripción"
+                fullWidth
+                multiline
+              />
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <TextInput source="Precio" label="Precio" fullWidth />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <SelectInput
-                source="Status"
-                label="Estado"
-                defaultValue="disponible"
-                choices={[
-                  { id: "disponible", name: "Disponible" },
-                  { id: "no_disponible", name: "No disponible" },
-                ]}
-                fullWidth
-              />
-            </Grid>
-
             <Grid item xs={12}>
+              Debe ingresar por lo menos cinco imagenes
               <ArrayInput source="Imagenes" label="Imágenes (URLs)">
                 <SimpleFormIterator>
                   <TextInput label="URL de imagen" />
