@@ -1,4 +1,4 @@
-package com.dh.backend.model;
+package com.xplora.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;

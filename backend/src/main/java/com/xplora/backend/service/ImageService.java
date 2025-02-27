@@ -1,9 +1,9 @@
-package com.dh.backend.service;
+package com.xplora.backend.service;
 
-import com.dh.backend.model.Image;
-import com.dh.backend.model.Product;
-import com.dh.backend.repository.ImageRepository;
-import com.dh.backend.repository.IProductRepository;
+import com.xplora.backend.model.Image;
+import com.xplora.backend.model.Product;
+import com.xplora.backend.repository.ImageRepository;
+import com.xplora.backend.repository.IProductRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;

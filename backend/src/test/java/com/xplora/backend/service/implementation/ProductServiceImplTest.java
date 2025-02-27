@@ -1,8 +1,8 @@
-package com.dh.backend.service.implementation;
+package com.xplora.backend.service.implementation;
 
-import com.dh.backend.model.Image;
-import com.dh.backend.model.Product;
-import com.dh.backend.service.IProductService;
+import com.xplora.backend.model.Image;
+import com.xplora.backend.model.Product;
+import com.xplora.backend.service.IProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

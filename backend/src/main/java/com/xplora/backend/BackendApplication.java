@@ -1,4 +1,4 @@
-package com.dh.backend;
+package com.xplora.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

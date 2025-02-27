@@ -1,6 +1,6 @@
-package com.dh.backend.service;
+package com.xplora.backend.service;
 
-import com.dh.backend.model.Product;
+import com.xplora.backend.model.Product;
 
 import java.util.List;
 

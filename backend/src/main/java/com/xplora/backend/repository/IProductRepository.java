@@ -1,6 +1,6 @@
-package com.dh.backend.repository;
+package com.xplora.backend.repository;
 
-import com.dh.backend.model.Product;
+import com.xplora.backend.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

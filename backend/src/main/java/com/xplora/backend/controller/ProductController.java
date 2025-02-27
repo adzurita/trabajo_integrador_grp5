@@ -1,7 +1,7 @@
-package com.dh.backend.controller;
+package com.xplora.backend.controller;
 
-import com.dh.backend.model.Product;
-import com.dh.backend.service.IProductService;
+import com.xplora.backend.model.Product;
+import com.xplora.backend.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

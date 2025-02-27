@@ -1,4 +1,4 @@
-package com.dh.backend;
+package com.xplora.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
