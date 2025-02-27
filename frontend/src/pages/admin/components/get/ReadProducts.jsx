@@ -7,6 +7,7 @@ import {
   DateField,
   TextField,
   EditButton,
+  DeleteButton,
   TextInput,
   DateInput,
   useRecordContext,
@@ -72,7 +73,6 @@ const CustomListActions = () => (
 export const PostList = () => {
   const [products, setProducts] = useState([]);
 
-
   useEffect(() => {
     getProducts().then((data) => {
       console.log(data);
@@ -80,7 +80,7 @@ export const PostList = () => {
     });
   }, []);
 
-  console.log("🚀 ~ PostList ~ products:", products)
+  console.log("🚀 ~ PostList ~ products:", products);
 
   return (
     <List
@@ -93,10 +93,13 @@ export const PostList = () => {
       }}
       title="Lista de productos"
       actions={<CustomListActions />}
+      bulkActionButtons={false}
     >
       <Box>
         <Datagrid
-        data={products}
+          rowClick={null}
+          bulkActionButtons={false}
+          data={products}
           sx={{
             "& .RaDatagrid-headerCell": {
               fontWeight: "bold",
@@ -113,8 +116,8 @@ export const PostList = () => {
           }}
         >
           <TextField source="id" sx={{ width: "50px" }} />
-          <MultipleImageField source="imageSet" />
-          <TextField source="name" sx={{ width: "200px" }} />
+          <MultipleImageField source="imageSet" label="Imagenes" />
+          <TextField source="name" label="Nombre" sx={{ width: "200px" }} />
           <TextField
             source="description"
             label="Descripción"
@@ -125,25 +128,27 @@ export const PostList = () => {
               textOverflow: "ellipsis",
             }}
           />
-          <TextField source="price" />
-          <TextField source="Categoría" />
+          <TextField source="price" label="Precio" />
+          <TextField source="Categoría" label="Categoría" />
           <TextField source="Status" label="Disponibilidad" />
-
-          <EditButton
-            source="Acciones"
-            sx={{
-              backgroundColor: "#00CED1",
-              borderRadius: "10px",
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-              padding: "5px 20px",
-              fontWeight: "bold",
-              textTransform: "none",
-              width: "100%",
-              "&:hover": {
-                backgroundColor: "#00B3B3",
-              },
-            }}
-          />
+          <Box display="flex" gap={1} label="Acciones">
+            <EditButton
+              label="Editar"
+              sx={{
+                backgroundColor: "#00CED1",
+                borderRadius: "10px",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                padding: "5px 20px",
+                fontWeight: "bold",
+                textTransform: "none",
+                width: "100%",
+                "&:hover": {
+                  backgroundColor: "#00B3B3",
+                },
+              }}
+            />
+            <DeleteButton label="Eliminar"/>
+          </Box>
         </Datagrid>
       </Box>
     </List>
