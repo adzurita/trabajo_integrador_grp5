@@ -1,11 +1,11 @@
-package com.dh.backend.model;
+package com.xplora.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "image")  // Nombre de la tabla en la BD
+@Table(name = "images")  // Nombre de la tabla en la BD
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 public class Image {
