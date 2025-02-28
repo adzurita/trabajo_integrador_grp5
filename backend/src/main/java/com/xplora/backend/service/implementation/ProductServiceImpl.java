@@ -1,7 +1,7 @@
 package com.xplora.backend.service.implementation;
 
-import com.xplora.backend.model.Image;
-import com.xplora.backend.model.Product;
+import com.xplora.backend.entity.Image;
+import com.xplora.backend.entity.Product;
 import com.xplora.backend.repository.IProductRepository;
 import com.xplora.backend.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +22,23 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Product saveProduct(Product product) throws Exception {
-        Optional<Product> OptionalProduct = iProductRepository.findByName(product.getName());
+        String productName = product.getName();
+        Optional<Product> OptionalProduct = iProductRepository.findByName(productName);
+
         if (OptionalProduct.isPresent()) {
-            throw new Exception("El producto con nombre '" + product.getName() + "' ya existe.");
+            throw new Exception("El producto con nombre '" + productName + "' ya existe.");
         }
+
         if (product.getImageSet() == null || product.getImageSet().size() < 5) {
             throw new Exception("El producto debe tener almenos 5 imagenes.");
         }
+
         for (Image image : product.getImageSet()) {
             image.setProduct(product);
         }
         product.setCreatedAt(LocalDateTime.now());
+        product.setUpdatedAt(product.getCreatedAt());
+
         return iProductRepository.save(product);
     }
 
@@ -54,11 +60,33 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public Product updateProduct(Product product) throws Exception {
+        Long productId = product.getId();
+        Optional<Product> productFound = iProductRepository.findById(productId);
+
+        if (productFound.isEmpty()) {
+            throw new Exception("No se puede modificar producto, ID: " + productId + " no encontrado.");
+        }
+
+        if (product.getImageSet() == null || product.getImageSet().size() < 5) {
+            throw new Exception("El producto debe tener almenos 5 imagenes.");
+        }
+
+        for (Image image : product.getImageSet()) {
+            image.setProduct(product);
+        }
+        product.setCreatedAt(productFound.get().getCreatedAt());
+        product.setUpdatedAt(LocalDateTime.now());
+
+        return iProductRepository.save(product);
+    }
+
+    @Override
     public void deleteByIdProduct(Long id) throws IllegalStateException {
         if (!iProductRepository.existsById(id)) {
             throw new IllegalStateException("No se pudo eliminar el producto, el ID: " + id + " no existe.");
         }
-        // TODO: Si producto tiene usuarios, no se debe poder eliminar
+        // TODO: Si producto tiene usuarios (que aun no consumen por completo el product), no se debe poder eliminar
         iProductRepository.deleteById(id);
     }
 }

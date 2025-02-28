@@ -1,4 +1,4 @@
-package com.xplora.backend.model;
+package com.xplora.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,7 +30,10 @@ public class Product {
     @Column(nullable = false)
     private LocalDateTime createdAt; // TODO: formato?
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @Column(nullable = false)
+    private LocalDateTime updatedAt; // TODO: formato?
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @Column(nullable = false)
     private Set<Image> imageSet = new HashSet<>();
 }

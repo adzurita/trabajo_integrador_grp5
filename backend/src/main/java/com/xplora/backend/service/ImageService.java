@@ -1,7 +1,7 @@
 package com.xplora.backend.service;
 
-import com.xplora.backend.model.Image;
-import com.xplora.backend.model.Product;
+import com.xplora.backend.entity.Image;
+import com.xplora.backend.entity.Product;
 import com.xplora.backend.repository.ImageRepository;
 import com.xplora.backend.repository.IProductRepository;
 import org.springframework.stereotype.Service;

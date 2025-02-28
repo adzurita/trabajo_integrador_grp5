@@ -1,6 +1,6 @@
 package com.xplora.backend.repository;
 
-import com.xplora.backend.model.Product;
+import com.xplora.backend.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

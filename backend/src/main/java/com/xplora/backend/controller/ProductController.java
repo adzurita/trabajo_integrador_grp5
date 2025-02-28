@@ -1,6 +1,6 @@
 package com.xplora.backend.controller;
 
-import com.xplora.backend.model.Product;
+import com.xplora.backend.entity.Product;
 import com.xplora.backend.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +48,19 @@ public class ProductController {
     public ResponseEntity<List<Product>> findAll() {
         return ResponseEntity
                 .ok(productService.findAllProducts());
+    }
+
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody Product product) {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(productService.updateProduct(product));
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ex.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

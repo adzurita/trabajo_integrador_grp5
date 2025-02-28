@@ -1,6 +1,6 @@
 package com.xplora.backend.controller;
 
-import com.xplora.backend.model.Image;
+import com.xplora.backend.entity.Image;
 import com.xplora.backend.service.ImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

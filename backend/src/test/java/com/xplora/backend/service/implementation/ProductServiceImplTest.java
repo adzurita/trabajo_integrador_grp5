@@ -1,7 +1,7 @@
 package com.xplora.backend.service.implementation;
 
-import com.xplora.backend.model.Image;
-import com.xplora.backend.model.Product;
+import com.xplora.backend.entity.Image;
+import com.xplora.backend.entity.Product;
 import com.xplora.backend.service.IProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +41,7 @@ class ProductServiceImplTest {
     @DisplayName("Testear que un producto se guarde en la bd con almenos 5 imagenes.")
     void testSave() throws Exception {
         // arrange
-        Product product = new Product(null, "nombre", "descripcion", 11.11d, null, imageSet);
+        Product product = new Product(null, "nombre", "descripcion", 11.11d, null, null, imageSet);
 
         // act
         Product savedProduct = productService.saveProduct(product);
@@ -60,8 +59,8 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Testear que un producto no se guarde si existe su nombre en la bd.")
     void testSaveExceptionIfProductNameExists() throws Exception {
-        Product product1 = new Product(null, "nombre1", "descripcion1", 11.11d, null, imageSet);
-        Product product2 = new Product(null, "nombre1", "descripcion2", 22.22d, null, imageSet);
+        Product product1 = new Product(null, "nombre1", "descripcion1", 11.11d, null, null, imageSet);
+        Product product2 = new Product(null, "nombre1", "descripcion2", 22.22d, null, null, imageSet);
 
         Product savedProduct1 = productService.saveProduct(product1);
         Exception ex = assertThrows(
@@ -76,7 +75,7 @@ class ProductServiceImplTest {
     @DisplayName("Testear que un producto no se guarde en la bd si tiene menos de 5 imagenes.")
     void testSaveExceptionIfFewProductImages() {
         imageSet.clear();
-        Product product = new Product(null, "nombre2", "descripcion", 11.11d, null, imageSet);
+        Product product = new Product(null, "nombre2", "descripcion", 11.11d, null, null, imageSet);
 
         Exception ex = assertThrows(
                 Exception.class,
@@ -89,7 +88,7 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Testear obtener un producto al buscar por id existente en la bd.")
     void testFindById() throws Exception {
-        Product product = new Product(null, "nombre3", "descripcion", 11.11d, null, imageSet);
+        Product product = new Product(null, "nombre3", "descripcion", 11.11d, null, null, imageSet);
         Long id = productService.saveProduct(product).getId();
 
         Product foundProduct = productService.findByIdProduct(id);
@@ -112,7 +111,7 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Testear obtener todos los productos de la bd (hay almenos 1 producto).")
     void testFindAll() throws Exception {
-        Product product = new Product(null, "nombre4", "descripcion", 11.11d, null, imageSet);
+        Product product = new Product(null, "nombre4", "descripcion", 11.11d, null, null, imageSet);
         productService.saveProduct(product);
 
         List<Product> products = productService.findAllProducts();
@@ -122,12 +121,14 @@ class ProductServiceImplTest {
         // TODO: verificar que cada elemento de la lista sea un producto?
     }
 
-    // TODO: Test cuando no hay productos?
+    // TODO: Test findAll cuando no hay productos?
+
+    // TODO: Tests update
 
     @Test
     @DisplayName("Testear eliminar un producto en la bd.")
     void testDeleteById() throws Exception {
-        Product product = new Product(null, "nombre5", "descripcion", 11.11d, null, imageSet);
+        Product product = new Product(null, "nombre5", "descripcion", 11.11d, null, null, imageSet);
         Long id = productService.saveProduct(product).getId();
 
         productService.deleteByIdProduct(id);

@@ -1,6 +1,6 @@
 package com.xplora.backend.repository;
 
-import com.xplora.backend.model.Image;
+import com.xplora.backend.entity.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
