@@ -2,6 +2,8 @@ package com.xplora.backend.controller;
 
 import com.xplora.backend.entity.Image;
 import com.xplora.backend.service.ImageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+    @Operation(security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping("/{productId}/upload")
     public ResponseEntity<?> uploadImage(@PathVariable Long productId, @RequestBody Map<String, Object> payload) {
         String imageUrl = (String) payload.get("imageUrl");
