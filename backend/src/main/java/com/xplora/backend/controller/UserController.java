@@ -22,6 +22,18 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        try {
+            return ResponseEntity
+                    .ok(userService.findByIdUser(id));
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ex.getMessage());
+        }
+    }
+
     @Operation(security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
     public ResponseEntity<List<User>> findAll() {

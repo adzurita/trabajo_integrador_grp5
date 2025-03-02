@@ -21,6 +21,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User findByIdUser(Long id) {
+        // TODO: Un usuario tiene que poder ver la info de otro usuario o solo suyo?
+        return iUserRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario con ID: " + id + " no encontrado."));
+    }
+
+    @Override
     public List<User> findAllUsers() {
         List<User> users = iUserRepository.findAll();
         if (users.isEmpty()) {
@@ -37,6 +44,10 @@ public class UserServiceImpl implements IUserService {
                 .orElseThrow(() -> new RuntimeException("No se pudo cambiar rol al usuario, el ID: " + id + " no existe."));
 
         String role = request.getRole();
+        if (role == null) {
+            throw  new RuntimeException("No se pudo cambiar rol al usuario, el rol no debe ser nulo.");
+        }
+
         Role roleFound = Arrays.stream(Role.values())
                 .filter(r -> r.name().equals(role))
                 .findFirst()
