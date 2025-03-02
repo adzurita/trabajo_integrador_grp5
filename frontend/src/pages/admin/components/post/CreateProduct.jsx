@@ -1,3 +1,6 @@
+import { Grid, Box, Container } from "@mui/material";
+import Swal from "sweetalert2";
+import BookIcon from "@mui/icons-material/Book";
 import {
   Create,
   SimpleForm,
@@ -7,38 +10,9 @@ import {
   ArrayInput,
   SimpleFormIterator,
 } from "react-admin";
-import { Grid, Box, Container } from "@mui/material";
-import BookIcon from "@mui/icons-material/Book";
-export const PostIcon = BookIcon;
-import Swal from "sweetalert2";
 import { createProduct } from "../../../../services/productService";
 
-export const validatePostCreation = (values) => {
-  const errors = {};
-  const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
-
-  if (
-    !values.Imagenes ||
-    !Array.isArray(values.Imagenes) ||
-    values.Imagenes.some((img) => !urlPattern.test(img))
-  ) {
-    errors.Imagenes = "Todas las imágenes deben ser URLs válidas.";
-  }
-
-  if (!values.Nombre || values.Nombre.length < 5) {
-    errors.Nombre = "El nombre debe tener al menos 5 caracteres.";
-  }
-
-  if (!values.Descripcion || values.Descripcion.length < 5) {
-    errors.Descripcion = "La descripción debe tener al menos 5 caracteres.";
-  }
-
-  if (!values.Precio || isNaN(Number(values.Precio))) {
-    errors.Precio = "El precio debe ser un número válido.";
-  }
-
-  return errors;
-};
+export const PostIcon = BookIcon;
 
 export const PostCreate = () => {
   const handleSubmit = async (values) => {
@@ -71,7 +45,6 @@ export const PostCreate = () => {
       });
     }
   };
-
   return (
     <Create
       sx={{
@@ -119,7 +92,7 @@ export const PostCreate = () => {
             </Grid>
 
             <Grid item xs={12}>
-              Debe ingresar por lo menos cinco imagenes
+              <label> Debe ingresar por lo menos cinco imagenes </label>
               <ArrayInput source="Imagenes" label="Imágenes (URLs)">
                 <SimpleFormIterator>
                   <TextInput label="URL de imagen" />
