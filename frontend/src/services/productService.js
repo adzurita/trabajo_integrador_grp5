@@ -24,14 +24,14 @@ export const createProduct = async (product) => {
       },
       body: JSON.stringify(product),
     });
-    console.log("🚀 ~ createProduct ~ response:", response);
     if (response.status === 400) {
+      const responseText = await response.text();
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Ya existe un producto con este nombre.",
+        text: responseText,
       });
-      throw new Error("Ya existe un producto con este nombre.");
+      return;
     }
     return await response.json();
   } catch (error) {

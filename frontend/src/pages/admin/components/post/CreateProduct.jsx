@@ -46,7 +46,7 @@ export const PostCreate = () => {
       name: values.Nombre,
       description: values.Descripción,
       price: parseFloat(values.Precio),
-      imageSet: values.Imagenes.map((imgUrl) => ({
+      imageSet: values.Imagenes?.map((imgUrl) => ({
         imageUrl: imgUrl,
         altText: `Imagen de ${values.Nombre}`,
       })),
@@ -54,7 +54,6 @@ export const PostCreate = () => {
 
     try {
       const response = await createProduct(productBody);
-      console.log("🚀 ~ Producto creado:", response);
       if (!response) {
         return;
       }

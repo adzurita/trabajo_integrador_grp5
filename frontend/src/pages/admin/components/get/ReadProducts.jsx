@@ -34,7 +34,7 @@ const MultipleImageField = ({ source }) => {
       {record[source].map((img, index) => (
         <img
           key={img.id || index}
-          src={img.imageUrl} 
+          src={img.imageUrl}
           alt={`Imagen ${index + 1}`}
           style={{
             width: "50px",
@@ -111,6 +111,11 @@ export const PostList = () => {
               padding: "30px",
             },
           }}
+          empty={
+            <div style={{ textAlign: "center", padding: "20px" }}>
+              Aún no se ha registrado ningún producto.
+            </div>
+          }
         >
           <TextField source="id" sx={{ width: "50px" }} />
           <MultipleImageField source="imageSet" label="Imagenes" />
