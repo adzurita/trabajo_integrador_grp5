@@ -12,7 +12,7 @@ function App() {
       {!location.pathname.startsWith("/admin") && 
         <Header />
       }
-      {/* {!location.pathname.startsWith("/admin") && <HeaderMobile />} */}
+      {!location.pathname.startsWith("/admin") && <HeaderMobile />}
 
       <Routes>
         <Route path="/admin*" element={<AdminPage />} />
