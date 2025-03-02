@@ -43,7 +43,7 @@ public class User implements UserDetails {
         return email;
     }
 
-    /*@Override
+    @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
     }
@@ -61,5 +61,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
-    }*/
+    }
 }
