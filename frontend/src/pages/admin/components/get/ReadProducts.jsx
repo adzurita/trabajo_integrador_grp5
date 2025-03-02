@@ -1,29 +1,20 @@
+import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import BookIcon from "@mui/icons-material/Book";
 import {
   List,
   Datagrid,
-  Edit,
-  Create,
-  SimpleForm,
-  DateField,
   TextField,
   EditButton,
-  DeleteButton,
-  TextInput,
-  DateInput,
   useRecordContext,
-  ImageInput,
-  ImageField,
-  useDataProvider,
+  TopToolbar,
+  CreateButton,
 } from "react-admin";
-import BookIcon from "@mui/icons-material/Book";
-import { Box } from "@mui/material";
-
-export const PostIcon = BookIcon;
-
-import { TopToolbar, CreateButton } from "react-admin";
-import { useEffect, useState } from "react";
 
 import { getProducts } from "../../../../services/productService";
+import { CustomDeleteButton } from "../deleteButton/DeleteButton";
+
+export const PostIcon = BookIcon;
 
 const MultipleImageField = ({ source }) => {
   const record = useRecordContext();
@@ -72,12 +63,13 @@ const CustomListActions = () => (
 
 export const PostList = () => {
   const [products, setProducts] = useState([]);
+  const [isDelete, setIsDelete] = useState(false);
 
   useEffect(() => {
     getProducts().then((data) => {
       setProducts(data);
     });
-  }, []);
+  }, [isDelete]);
 
   return (
     <List
@@ -149,7 +141,7 @@ export const PostList = () => {
                 },
               }}
             />
-            <DeleteButton label="Eliminar" />
+           <CustomDeleteButton setIsDelete={setIsDelete} />
           </Box>
         </Datagrid>
       </Box>
