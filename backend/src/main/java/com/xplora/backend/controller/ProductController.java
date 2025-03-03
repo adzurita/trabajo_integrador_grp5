@@ -2,6 +2,8 @@ package com.xplora.backend.controller;
 
 import com.xplora.backend.entity.Product;
 import com.xplora.backend.service.IProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @Operation(security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Product product) {
         try {
@@ -50,6 +53,7 @@ public class ProductController {
                 .ok(productService.findAllProducts());
     }
 
+    @Operation(security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Product product) {
         try {
@@ -63,6 +67,7 @@ public class ProductController {
         }
     }
 
+    @Operation(security = @SecurityRequirement(name = "bearerAuth"))
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         try {

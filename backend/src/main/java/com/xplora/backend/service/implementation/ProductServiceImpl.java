@@ -43,9 +43,9 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product findByIdProduct(Long id) throws IllegalStateException {
+    public Product findByIdProduct(Long id) {
         return iProductRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Producto con ID: " + id + " no encontrado."));
+                .orElseThrow(() -> new RuntimeException("Producto con ID: " + id + " no encontrado."));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ProductServiceImpl implements IProductService {
         Optional<Product> productFound = iProductRepository.findById(productId);
 
         if (productFound.isEmpty()) {
-            throw new Exception("No se puede modificar producto, ID: " + productId + " no encontrado.");
+            throw new Exception("No se pudo modificar producto, ID: " + productId + " no existe.");
         }
 
         if (product.getImageSet() == null || product.getImageSet().size() < 5) {
@@ -84,7 +84,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void deleteByIdProduct(Long id) throws IllegalStateException {
         if (!iProductRepository.existsById(id)) {
-            throw new IllegalStateException("No se pudo eliminar el producto, el ID: " + id + " no existe.");
+            throw new IllegalStateException("No se pudo eliminar producto, ID: " + id + " no existe.");
         }
         // TODO: Si producto tiene usuarios (que aun no consumen por completo el product), no se debe poder eliminar
         iProductRepository.deleteById(id);
