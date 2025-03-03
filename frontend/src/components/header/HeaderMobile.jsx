@@ -34,7 +34,7 @@ export const HeaderMobile = () => {
   };
 
   return (
-    <AppBar position="fixed" elevation="0" sx={{ backgroundColor: "#F3F4F6" }}>
+    <AppBar position="fixed" elevation="0" sx={{ backgroundColor: "#F3F4F6", display: { xs: "block", sm: "block",  md: "none", lg:"none", xl: "none" } }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: "flex" }}>
@@ -54,7 +54,7 @@ export const HeaderMobile = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {anchorElNav ? <CloseIcon /> : <MenuIcon />}
+              {anchorElNav ? <CloseIcon sx={{color: "black"}}/> : <MenuIcon sx={{color: "black"}}/>}
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -98,7 +98,7 @@ export const HeaderMobile = () => {
                         {name}
                       </Typography>
                     </div>
-                    <hr  style={{ display: "flex", gap: "10px", width: "100%" }}/>
+                   {/*  <hr  style={{ display: "flex", gap: "10px", width: "100%" }}/> */}
                   </Link>
                 </MenuItem>
               ))}
