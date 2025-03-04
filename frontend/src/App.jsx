@@ -6,13 +6,12 @@ import "./App.css";
 import { ProductDetail } from "./components/detailProduct/detailProduct";
 
 function App() {
-  const isMobileDevice = () => window.innerWidth <= 768;
   return (
     <>
       {!location.pathname.startsWith("/admin") && 
         <Header />
       }
-      {/* {!location.pathname.startsWith("/admin") && <HeaderMobile />} */}
+      {!location.pathname.startsWith("/admin") && <HeaderMobile />}
 
       <Routes>
         <Route path="/admin*" element={<AdminPage />} />

@@ -1,0 +1,5 @@
+.header-mobile__close-icon {
+        display: flex;
+        justify-content: end;
+        margin: 30px 25px 30px 0;
+}
