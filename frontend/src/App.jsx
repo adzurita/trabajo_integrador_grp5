@@ -6,7 +6,6 @@ import "./App.css";
 import { ProductDetail } from "./components/detailProduct/detailProduct";
 
 function App() {
-  const isMobileDevice = () => window.innerWidth <= 768;
   return (
     <>
       {!location.pathname.startsWith("/admin") && 

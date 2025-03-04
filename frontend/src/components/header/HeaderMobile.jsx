@@ -14,6 +14,9 @@ import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import GradeIcon from "@mui/icons-material/Grade";
 import HomeIcon from "@mui/icons-material/Home";
+import './styles.css';
+
+const namespace = "header-mobile";
 
 const pages = [
   { name: "Inicio", id: "home", icon: HomeIcon },
@@ -24,17 +27,34 @@ const pages = [
 export const HeaderMobile = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const handleOpenNavMenu = (event) => {
+    setAnchorElNav(null);
     setAnchorElNav(event.currentTarget);
+    setIsOpenMenu(true);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    setIsOpenMenu(false);
   };
 
   return (
-    <AppBar position="fixed" elevation="0" sx={{ backgroundColor: "#F3F4F6", display: { xs: "block", sm: "block",  md: "none", lg:"none", xl: "none" } }}>
+    <AppBar
+      position="fixed"
+      elevation="0"
+      sx={{
+        backgroundColor: "#F3F4F6",
+        display: {
+          xs: "block",
+          sm: "block",
+          md: "none",
+          lg: "none",
+          xl: "none",
+        },
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: "flex" }}>
@@ -54,7 +74,7 @@ export const HeaderMobile = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {anchorElNav ? <CloseIcon sx={{color: "black"}}/> : <MenuIcon sx={{color: "black"}}/>}
+              <MenuIcon sx={{ color: "black" }} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -74,31 +94,48 @@ export const HeaderMobile = () => {
                 display: {
                   xs: "block",
                   md: "none",
-                   height: "100vh",
-                  "& .MuiPaper-root": { backgroundColor: "#FD346E",  height: "100%", },
+                  "& .MuiPaper-root": {
+                    backgroundColor: "#FD346E",
+                    height: "100%",
+                    width: "265px",
+                    top:  "0 !important",
+                    right: "0 !important",
+                    borderRadius: 0,
+                  },
                 },
               }}
             >
+              <div className={`${namespace}__close-icon`} onClick={handleCloseNavMenu}>
+
+              <CloseIcon sx={{color: "white"}}/>
+              </div>
               {pages.map(({ name, id, icon: Icon }) => (
                 <MenuItem
                   key={id}
                   onClick={handleCloseNavMenu}
-                  sx={{ backgroundColor: "#FD346E", width: "100%" }}
+                  sx={{ backgroundColor: "#FD346E" }}
                 >
                   <Link
                     to={id}
                     smooth={true}
                     duration={500}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                    sx={{ width: "100%" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      width: "100%",
+                    }}
                   >
-                    <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+                    <div
+                      style={{ display: "flex", gap: "10px", width: "100%" }}
+                    >
                       <Icon sx={{ color: "white" }} />
                       <Typography textAlign="center" sx={{ color: "white" }}>
                         {name}
                       </Typography>
                     </div>
-                   {/*  <hr  style={{ display: "flex", gap: "10px", width: "100%" }}/> */}
+                    <hr
+                      style={{ display: "flex", gap: "10px" }}
+                    />
                   </Link>
                 </MenuItem>
               ))}
