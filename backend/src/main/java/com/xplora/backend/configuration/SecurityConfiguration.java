@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/users/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     //auth.requestMatchers("/users/**").hasAuthority("ADMIN");
                     // endpoints que requieren autenticacion (al menos el rol de usuario)
-                    //auth.requestMatchers("/users/**").authenticated();
+                    auth.requestMatchers( "/send-email/**").authenticated();
                     auth.anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)

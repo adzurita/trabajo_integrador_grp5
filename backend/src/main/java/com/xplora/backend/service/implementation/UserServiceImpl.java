@@ -1,5 +1,6 @@
 package com.xplora.backend.service.implementation;
 
+import com.xplora.backend.configuration.JwtService;
 import com.xplora.backend.dto.request.UserRoleRequestDto;
 import com.xplora.backend.entity.Role;
 import com.xplora.backend.entity.User;
@@ -14,10 +15,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements IUserService {
     private IUserRepository iUserRepository;
+    private JwtService jwtService;
 
     @Autowired
-    public UserServiceImpl(IUserRepository iUserRepository) {
+    public UserServiceImpl(IUserRepository iUserRepository, JwtService jwtService) {
         this.iUserRepository = iUserRepository;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class UserServiceImpl implements IUserService {
 
         String role = request.getRole();
         if (role == null) {
-            throw  new RuntimeException("No se pudo cambiar rol al usuario, el rol no debe ser nulo.");
+            throw new RuntimeException("No se pudo cambiar rol al usuario, el rol no debe ser nulo.");
         }
 
         Role roleFound = Arrays.stream(Role.values())
@@ -55,5 +58,12 @@ public class UserServiceImpl implements IUserService {
 
         userFound.setRole(roleFound);
         return iUserRepository.save(userFound);
+    }
+
+    @Override
+    public User findByTokenUser(String token) {
+        String userEmail = jwtService.extractUsername(token);
+        return iUserRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado."));
     }
 }
