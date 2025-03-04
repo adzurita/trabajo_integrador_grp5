@@ -98,6 +98,7 @@ export const HeaderMobile = () => {
                     backgroundColor: "#FD346E",
                     height: "100%",
                     width: "265px",
+                    left: "auto !important",
                     top:  "0 !important",
                     right: "0 !important",
                     borderRadius: 0,
