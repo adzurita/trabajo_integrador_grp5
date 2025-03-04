@@ -38,10 +38,12 @@ public class SecurityConfiguration {
                     auth.requestMatchers(HttpMethod.PUT, "/products/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     auth.requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     auth.requestMatchers(HttpMethod.POST, "/images/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
-                    auth.requestMatchers("/users/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
+                    auth.requestMatchers("/users").hasAnyAuthority("ADMIN", "SUPERADMIN");
+                    auth.requestMatchers("/users/*/role/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     //auth.requestMatchers("/users/**").hasAuthority("ADMIN");
                     // endpoints que requieren autenticacion (al menos el rol de usuario)
                     auth.requestMatchers( "/send-email/**").authenticated();
+                    auth.requestMatchers( "/users/profile/**").authenticated();
                     auth.anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)
