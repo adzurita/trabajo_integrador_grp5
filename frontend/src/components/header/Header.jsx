@@ -5,6 +5,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { Link } from "react-scroll";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import Login from "../login/Login";
+import { Avatar } from "@mui/material";
 
 const pages = [
   { name: "Home", id: "home" },
@@ -13,6 +17,8 @@ const pages = [
 ];
 
 export const Header = () => {
+  const { user, login, logout } = useContext(AuthContext);
+  const [openModal, setOpenModal] = useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -31,12 +37,12 @@ export const Header = () => {
     setAnchorElUser(null);
   };
 
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // const scrollToSection = (id) => {
+  //   const section = document.getElementById(id);
+  //   if (section) {
+  //     section.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
 
   return (
     <AppBar position="fixed" elevation="0" sx={{ backgroundColor: "#F3F4F6", display: { xs: "none", sm: "none",  md: "block", lg:"block", xl: "block" } }}>
@@ -102,29 +108,27 @@ export const Header = () => {
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Button
-              sx={{
-                color: "#A39A9A",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-              }}
-            >
-              Iniciar sesión
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#00CED1",
-                borderRadius: "10px",
-                boxShadow: "none",
-              }}
-            >
-              Registrarse
-            </Button>
+            {user ? (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Avatar sx={{ bgcolor: "#00CED1", color: "white" }}>{user.avatar}</Avatar>
+                <Button onClick={logout} sx={{ color: "#A39A9A" }}>
+                  Cerrar sesión
+                </Button>
+              </Box>
+            ) : (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Button onClick={() => setOpenModal(true)} sx={{ color: "#A39A9A" }}>
+                Iniciar sesión
+              </Button>
+              <Button variant="contained" sx={{ backgroundColor: "#00CED1", borderRadius: "10px", boxShadow: "none" }}>
+                Registrarse
+              </Button>
+            </Box>
+          )}
+            <Login open={openModal} handleClose={() => setOpenModal(false)} handleLogin={login} />
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
-};
+}
