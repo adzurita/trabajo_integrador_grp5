@@ -40,6 +40,12 @@ public class SecurityConfiguration {
                     auth.requestMatchers(HttpMethod.POST, "/images/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     auth.requestMatchers("/users").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     auth.requestMatchers("/users/*/role/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
+                    // protección para categorías
+                    auth.requestMatchers(HttpMethod.POST, "/categories/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
+                    auth.requestMatchers(HttpMethod.GET, "/categories/**").permitAll(); //
+                    auth.requestMatchers(HttpMethod.POST, "/features/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
+                    auth.requestMatchers(HttpMethod.GET, "/features/**").permitAll();
+
                     //auth.requestMatchers("/users/**").hasAuthority("ADMIN");
                     // endpoints que requieren autenticacion (al menos el rol de usuario)
                     auth.requestMatchers( "/send-email/**").authenticated();
