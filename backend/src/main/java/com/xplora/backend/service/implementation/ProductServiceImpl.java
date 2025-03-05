@@ -89,9 +89,4 @@ public class ProductServiceImpl implements IProductService {
         // TODO: Si producto tiene usuarios (que aun no consumen por completo el product), no se debe poder eliminar
         iProductRepository.deleteById(id);
     }
-
-    @Override
-    public List<Product> getProductsByCategory(Long categoryId) {
-        return List.of();
-    }
 }
