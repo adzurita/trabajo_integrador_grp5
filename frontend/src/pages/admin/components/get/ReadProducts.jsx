@@ -9,6 +9,7 @@ import {
   useRecordContext,
   TopToolbar,
   CreateButton,
+  FunctionField
 } from "react-admin";
 
 import { getProducts } from "../../../../services/productService";
@@ -94,13 +95,6 @@ export const PostList = () => {
               fontWeight: "bold",
               backgroundColor: "#00B3B3",
               color: "white",
-              padding: "12px 30px",
-            },
-            "& .RaDatagrid-rowCell": {
-              padding: "12px",
-            },
-            "& .css-efpi9o-MuiTableCell-root.MuiTableCell-sizeSmall": {
-              padding: "30px",
             },
           }}
           empty={
@@ -109,6 +103,7 @@ export const PostList = () => {
             </div>
           }
         >
+
           <TextField source="id" sx={{ width: "50px" }} />
           <MultipleImageField source="imageSet" label="Imagenes" />
           <TextField source="name" label="Nombre" sx={{ width: "200px" }} />
@@ -123,8 +118,7 @@ export const PostList = () => {
             }}
           />
           <TextField source="price" label="Precio" />
-          <TextField source="Categoría" label="Categoría" />
-          <TextField source="Status" label="Disponibilidad" />
+          <FunctionField label="Categoría" render={() => "Aventura"} />
           <Box display="flex" gap={1} label="Acciones">
             <EditButton
               label="Editar"
@@ -143,6 +137,7 @@ export const PostList = () => {
             />
            <CustomDeleteButton setIsDelete={setIsDelete} />
           </Box>
+          
         </Datagrid>
       </Box>
     </List>
