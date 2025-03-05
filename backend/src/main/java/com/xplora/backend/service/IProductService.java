@@ -10,4 +10,6 @@ public interface IProductService {
     List<Product> findAllProducts();
     Product updateProduct(Product product) throws Exception;
     void deleteByIdProduct(Long id);
+
+    List<Product> getProductsByCategory(Long categoryId);
 }
