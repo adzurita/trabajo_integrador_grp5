@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
         name: `${firstname} ${lastname}`,
         email,
         avatar: initials,
-        isAdmin: profile.role === "SUPERADMIN",
+        isAdmin: profile.role === "SUPERADMIN" || profile.role === "ADMIN",
       };
 
       localStorage.setItem("user", JSON.stringify(user));

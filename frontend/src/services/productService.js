@@ -171,6 +171,7 @@ export const updateUserRole = async (id, role) => {
         title: "Error",
         text: responseText,
       });
+
       return;
     }
  

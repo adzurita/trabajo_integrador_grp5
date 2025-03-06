@@ -13,8 +13,6 @@ import {
 } from "react-admin";
 
 import { getUsers, updateUserRole } from "../../../../services/productService";
-import { CustomDeleteButton } from "../deleteButton/DeleteButton";
-
 export const PostIcon = BookIcon;
 
 const RoleField = () => {
@@ -29,7 +27,9 @@ const RoleField = () => {
     } catch (error) {
       console.error("Error al actualizar el rol:", error);
     }
-    window.reload()
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (
@@ -77,11 +77,9 @@ const RoleField = () => {
 
 export const UsersLists = () => {
   const [users, setUsers] = useState([]);
-  
 
   const fetchUsers = async () => {
     const data = await getUsers();
-    console.log("🚀 ~ getUsers ~ data:", data);
     setUsers(data);
   };
 
