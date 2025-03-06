@@ -21,10 +21,12 @@ export const getProducts = async () => {
 // Create product
 export const createProduct = async (product) => {
   try {
+    const bearerToken = `Bearer ${localStorage.getItem("token")}`;
     const response = await fetch(URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: bearerToken,
       },
       body: JSON.stringify(product),
     });
@@ -46,8 +48,12 @@ export const createProduct = async (product) => {
 // Delete product
 export const deleteProduct = async (id) => {
   try {
+    const bearerToken = `Bearer ${localStorage.getItem("token")}`;
     const response = await fetch(`${URL}/${id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: bearerToken,
+      },
     });
     return await response.json();
   } catch (error) {
@@ -130,3 +136,45 @@ export const getProfile = async (token) => {
     console.error(error);
   }
 };
+
+// Get users
+export const getUsers = async () => {
+  try {
+    const bearerToken = `Bearer ${localStorage.getItem("token")}`;
+    const response = await fetch("http://localhost:8080/users", {
+      headers: {
+        Authorization: bearerToken,
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Change role
+export const updateUserRole = async (id, role) => {
+  try {
+    const bearerToken = `Bearer ${localStorage.getItem("token")}`;
+    const response = await fetch(`http://localhost:8080/users/${id}/role`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: bearerToken,
+      },
+      body: JSON.stringify({ role }),
+    });
+    if (response.status === 400) {
+      const responseText = await response.text();
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: responseText,
+      });
+      return;
+    }
+ 
+  } catch (error) {
+    console.error(error);
+  }
+}
