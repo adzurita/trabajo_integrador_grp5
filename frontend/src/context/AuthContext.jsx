@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { loginUser, getProfile } from "../services/productService";
 
 export const AuthContext = createContext();
@@ -31,6 +31,7 @@ export const AuthProvider = ({ children }) => {
         name: `${firstname} ${lastname}`,
         email,
         avatar: initials,
+        isAdmin: profile.role === "SUPERADMIN"
       };
 
       localStorage.setItem("user", JSON.stringify(user));
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
   };
 
@@ -49,3 +51,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
