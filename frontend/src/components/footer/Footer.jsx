@@ -7,9 +7,9 @@ export const Footer = () => {
             <Grid container spacing={3} justifyContent="center">
                 <Grid item xs={12} md={4}>
                     <img
-                        src="src/assets/logo.svg"
+                        src="src/assets/logowhite.svg"
                         alt="logo xplora+"
-                        style={{ width: "150px", height: "auto", color: "white" }}
+                        style={{ width: "200px", height: "auto", color: "white" }}
                     />
                 </Grid>
                 <Grid item xs={12} md={4}>
