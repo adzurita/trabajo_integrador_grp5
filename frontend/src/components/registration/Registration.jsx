@@ -48,10 +48,9 @@ export const Registration = ({ open, setOpen }) => {
     e.preventDefault();
     try {
       const response = await registerUser(registrationData);
-      if (response?.token) {
-        localStorage.setItem("token", response.token); 
+
         setRegistrationData({ firstname: "", lastname: "", email: "", password: "" });
-      }
+      
       setOpen(false);
       Swal.fire({
         icon: "success",
@@ -136,7 +135,7 @@ export const Registration = ({ open, setOpen }) => {
                 placeholder="Nombre"
                 onChange={handleInputChange}
                 name="firstname"
-                autocomplete="off"
+                autoComplete="off"
                 value={registrationData.firstname}
               />
               <TextField
@@ -144,7 +143,7 @@ export const Registration = ({ open, setOpen }) => {
                 placeholder="Apellido"
                 onChange={handleInputChange}
                 name="lastname"
-                autocomplete="off"
+                autoComplete="off"
                 value={registrationData.lastname}
               />
               <TextField
@@ -152,7 +151,7 @@ export const Registration = ({ open, setOpen }) => {
                 placeholder="Email"
                 onChange={handleInputChange}
                 name="email"
-                autocomplete="off"
+                autoComplete="off"
                 value={registrationData.email}
               />
               <TextField
@@ -161,7 +160,7 @@ export const Registration = ({ open, setOpen }) => {
                 onChange={handleInputChange}
                 name="password"
                 type="password"
-                autocomplete="off"
+                autoComplete="off"
                 value={registrationData.password}
               />
             </Box>

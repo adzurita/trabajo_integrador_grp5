@@ -57,6 +57,7 @@ export const deleteProduct = async (id) => {
 
 // USERS
 
+// Create user
 export const registerUser = async (user) => {
   try {
     const response = await fetch("http://localhost:8080/api/auth/register", {
@@ -75,6 +76,50 @@ export const registerUser = async (user) => {
       });
       return;
     }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Login user
+export const loginUser = async (user) => {
+  try {
+    const response = await fetch("http://localhost:8080/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    if (response.status === 400) {
+      const responseText = await response.text();
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: responseText,
+      });
+      return;
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get profile
+export const getProfile = async (token) => {
+  try {
+    const bearerToken = `Bearer ${token}`;
+    console.log(typeof  bearerToken, bearerToken);
+    const response = await fetch('http://localhost:8080/users/profile', {
+      headers: {
+        "Authorization": bearerToken,
+      },
+    });
+/*     if (!response.ok) {
+      throw new Error("Error al obtener el perfil");
+    } */
     return await response.json();
   } catch (error) {
     console.error(error);

@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { loginUser, getProfile } from "../services/productService";
 
 export const AuthContext = createContext();
 
@@ -12,14 +13,36 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  
-  const login = (email, password) => {
-    // petición al backend para validar credenciales
-    const fakeUser = { name: "Juan Pérez", email, avatar: "JP" };
-    
-    localStorage.setItem("user", JSON.stringify(fakeUser));
-    setUser(fakeUser);
+  const profile = async (token) => {
+    try {
+      const profile = await getProfile(token);
+      console.log("🚀 ~ login ~ profile:", profile);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const login = async (email, password) => {
+    const response = await loginUser({ email, password });
+    if (!response) {
+      return;
+    }
+    let token 
+    if (response?.token) {
+       token = response.token;
+      localStorage.setItem("token", token);
+      profile(token);
+    }
+/*     const profile = await getProfile(token);
+    console.log("🚀 ~ login ~ profile:", profile); */
+/* 
+        const fakeUser = { name: "Juan Pérez", email, avatar: "JP" };
+
+    localStorage.setItem("user", JSON.stringify(fakeUser));
+    setUser(fakeUser);  */
+  };
+
+
 
   const logout = () => {
     localStorage.removeItem("user");
@@ -27,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user:undefined, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
