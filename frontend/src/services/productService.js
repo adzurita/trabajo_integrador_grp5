@@ -111,15 +111,20 @@ export const loginUser = async (user) => {
 export const getProfile = async (token) => {
   try {
     const bearerToken = `Bearer ${token}`;
-    console.log(typeof  bearerToken, bearerToken);
-    const response = await fetch('http://localhost:8080/users/profile', {
+    const response = await fetch("http://localhost:8080/users/profile", {
       headers: {
-        "Authorization": bearerToken,
+        Authorization: bearerToken,
       },
     });
-/*     if (!response.ok) {
-      throw new Error("Error al obtener el perfil");
-    } */
+    if (response.status === 400) {
+      const responseText = await response.text();
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: responseText,
+      });
+      return;
+    }
     return await response.json();
   } catch (error) {
     console.error(error);

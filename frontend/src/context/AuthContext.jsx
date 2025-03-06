@@ -13,36 +13,30 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const profile = async (token) => {
-    try {
-      const profile = await getProfile(token);
-      console.log("🚀 ~ login ~ profile:", profile);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const login = async (email, password) => {
     const response = await loginUser({ email, password });
     if (!response) {
       return;
     }
-    let token 
+    let token;
     if (response?.token) {
-       token = response.token;
+      token = response.token;
       localStorage.setItem("token", token);
-      profile(token);
+      const profile = await getProfile(token);
+      console.log("🚀🚀🚀🚀🚀profile:", profile);
+      const { firstname, lastname, email } = profile;
+      const initials = `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
+
+      const user = {
+        name: `${firstname} ${lastname}`,
+        email,
+        avatar: initials,
+      };
+
+      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
     }
-/*     const profile = await getProfile(token);
-    console.log("🚀 ~ login ~ profile:", profile); */
-/* 
-        const fakeUser = { name: "Juan Pérez", email, avatar: "JP" };
-
-    localStorage.setItem("user", JSON.stringify(fakeUser));
-    setUser(fakeUser);  */
   };
-
-
 
   const logout = () => {
     localStorage.removeItem("user");
@@ -50,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user:undefined, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

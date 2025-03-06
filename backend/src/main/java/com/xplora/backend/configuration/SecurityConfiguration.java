@@ -25,6 +25,7 @@ public class SecurityConfiguration {
         return http.authorizeHttpRequests(
                 auth -> {
                     // endpoints que no requieren autenticacion
+                    auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers("/api/auth/**").permitAll();
                     auth.requestMatchers("/h2-console/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
