@@ -25,17 +25,20 @@ export const AuthProvider = ({ children }) => {
       const profile = await getProfile(token);
       console.log("🚀🚀🚀🚀🚀profile:", profile);
       const { firstname, lastname, email } = profile;
-      const initials = `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
+      const initials = `${firstname.charAt(0)}${lastname.charAt(
+        0
+      )}`.toUpperCase();
 
       const user = {
         name: `${firstname} ${lastname}`,
         email,
         avatar: initials,
-        isAdmin: profile.role === "SUPERADMIN"
+        isAdmin: profile.role === "SUPERADMIN",
       };
 
       localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
+      window.location.href = "/profile";
     }
   };
 
@@ -43,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setUser(null);
+    window.location.href = "/";
   };
 
   return (

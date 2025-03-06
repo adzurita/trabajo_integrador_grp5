@@ -6,6 +6,7 @@ import {
   HeaderMobile,
   ProtectedRoute,
   Restricted,
+  Profile
 } from "./components/index";
 import "./App.css";
 import { ProductDetail } from "./pages/detailProduct/detailProduct";
@@ -35,6 +36,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/restricted" element={<Restricted />} />
+        <Route path="/profile" element={<Profile />} />
         {/*<Route path="*" element={<NotFoundPage />} />*/}
       </Routes>
       {!isRestrictedPage && <Footer />}
