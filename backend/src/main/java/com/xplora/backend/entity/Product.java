@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,20 +30,24 @@ public class Product {
     private Double price;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt; // TODO: formato?
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime updatedAt; // TODO: formato?
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Column(nullable = false)
     private Set<Image> imageSet = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Feature> features;
 
+    @ManyToMany
+    @JoinTable(
+            name = "product_feature", // Nombre de la tabla  en la BD
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_id")
+    )
+    private List<Feature> features;
 }

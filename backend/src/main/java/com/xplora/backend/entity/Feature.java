@@ -3,8 +3,10 @@ package com.xplora.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
-@Table(name = "features")
+@Table(name = "feature")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,10 +20,9 @@ public class Feature {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String value;
+    @ManyToMany(mappedBy = "features")
+    private List<Product> products;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    public void setProduct(Product product) {
+    }
 }
