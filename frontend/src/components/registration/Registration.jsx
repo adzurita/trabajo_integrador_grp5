@@ -33,6 +33,9 @@ export const Registration = ({ open, setOpen }) => {
     password: "",
   });
 
+  const [errors, setErrors] = useState({});
+  const [checked, setChecked] = useState(false);
+
   const handleClose = () => setOpen(false);
 
   const handleInputChange = (e) => {
@@ -42,16 +45,64 @@ export const Registration = ({ open, setOpen }) => {
       ...registrationData,
       [name]: value,
     });
+    // setErrors({ ...errors, [name]: "" });
+    setErrors({}); 
+  };
+
+  const validateFields = () => {
+    const newErrors = {};
+    const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    if (!registrationData.firstname.trim()) {
+      newErrors.firstname = "El nombre es obligatorio.";
+    } else if (!nameRegex.test(registrationData.firstname)) {
+      newErrors.firstname = "El nombre solo puede contener letras.";
+    } else if (registrationData.firstname.length < 2) {
+      newErrors.firstname = "El nombre debe tener al menos 2 caracteres.";
+    }
+
+    if (!registrationData.lastname.trim()) {
+      newErrors.lastname = "El apellido es obligatorio.";
+    } else if (!nameRegex.test(registrationData.lastname)) {
+      newErrors.lastname = "El apellido solo puede contener letras.";
+    } else if (registrationData.lastname.length < 2) {
+      newErrors.lastname = "El apellido debe tener al menos 2 caracteres.";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!registrationData.email.trim()) {
+      newErrors.email = "El email es obligatorio.";
+    } else if (!emailRegex.test(registrationData.email)) {
+      newErrors.email = "Ingresa un email válido.";
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!registrationData.password) {
+      newErrors.password = "La contraseña es obligatoria.";
+    } else if (!passwordRegex.test(registrationData.password)) {
+      newErrors.password =
+        "Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.";
+    }
+
+    if (!checked) {
+      newErrors.checkbox = "Debes aceptar los términos y condiciones.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateFields()) return;
+
     try {
       const response = await registerUser(registrationData);
 
         setRegistrationData({ firstname: "", lastname: "", email: "", password: "" });
       
       setOpen(false);
+      setChecked(false);
+      setErrors({});
       Swal.fire({
         icon: "success",
         title: "Éxito",
@@ -137,7 +188,14 @@ export const Registration = ({ open, setOpen }) => {
                 name="firstname"
                 autoComplete="off"
                 value={registrationData.firstname}
+                error={!!errors.firstname}
               />
+              {errors.firstname && (
+                <Typography sx={{ color: "red", fontSize: "16px", fontWeight: "bold", textAlign: "center" }}>
+                  {errors.firstname}
+                </Typography>
+              )}
+
               <TextField
                 sx={{ backgroundColor: "white", width: "100%" }}
                 placeholder="Apellido"
@@ -145,7 +203,14 @@ export const Registration = ({ open, setOpen }) => {
                 name="lastname"
                 autoComplete="off"
                 value={registrationData.lastname}
+                error={!!errors.lastname}
               />
+               {errors.lastname && (
+                  <Typography sx={{ color: "red", fontSize: "16px", fontWeight: "bold", textAlign: "center" }}>
+                    {errors.lastname}
+                  </Typography>
+                )}
+
               <TextField
                 sx={{ backgroundColor: "white", width: "100%" }}
                 placeholder="Email"
@@ -153,7 +218,13 @@ export const Registration = ({ open, setOpen }) => {
                 name="email"
                 autoComplete="off"
                 value={registrationData.email}
+                error={!!errors.email}
               />
+              {errors.email && (
+                <Typography sx={{ color: "red", fontSize: "16px", fontWeight: "bold", textAlign: "center" }}>
+                  {errors.email}
+                </Typography>
+              )}
               <TextField
                 sx={{ backgroundColor: "white", width: "100%" }}
                 placeholder="Contraseña"
@@ -162,12 +233,19 @@ export const Registration = ({ open, setOpen }) => {
                 type="password"
                 autoComplete="off"
                 value={registrationData.password}
+                error={!!errors.password}
               />
             </Box>
-
+            {errors.password && (
+              <Typography sx={{ color: "red", fontSize: "16px", fontWeight: "bold", textAlign: "center" }}>
+                {errors.password}
+              </Typography>
+            )}
             <FormControlLabel
               control={
                 <Checkbox
+                  checked={checked}
+                  onChange={() => setChecked(!checked)}
                   sx={{
                     color: "white",
                     "&.Mui-checked": {
@@ -179,6 +257,7 @@ export const Registration = ({ open, setOpen }) => {
               label="Estoy de acuerdo con la privacidad y la política"
               sx={{ color: "white" }}
             />
+            {errors.termsAccepted && <Typography sx={{ color: "red", fontSize: "12px" }}>{errors.termsAccepted}</Typography>}
             <Button
               variant="contained"
               sx={{

@@ -6,6 +6,7 @@ import "./App.css";
 import { ProductDetail } from "./pages/detailProduct/detailProduct";
 import { Gallery } from "./pages/gallery/Gallery";
 import { AuthProvider } from "./context/AuthContext"; 
+import { Footer } from "./components/footer/Footer";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/gallery" element={<Gallery/>} />
         {/*<Route path="*" element={<NotFoundPage />} />*/}
       </Routes>
+      <Footer />
     </AuthProvider>
   );
 }
