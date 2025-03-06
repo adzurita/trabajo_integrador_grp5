@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -6,7 +6,9 @@ import Modal from "@mui/material/Modal";
 import CancelIcon from "@mui/icons-material/Cancel";
 import TextField from "@mui/material/TextField";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import Swal from "sweetalert2";
 import "./styles.css";
+import { registerUser } from "../../services/productService";
 
 const namespace = "registration";
 
@@ -15,7 +17,6 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 0,
@@ -24,8 +25,49 @@ const style = {
   borderRadius: "10px",
 };
 
-export const Registration = ({ open, setOpen, handleOpen }) => {
+export const Registration = ({ open, setOpen }) => {
+  const [registrationData, setRegistrationData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+  });
+
   const handleClose = () => setOpen(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setRegistrationData({
+      ...registrationData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await registerUser(registrationData);
+      setRegistrationData({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+      });
+      setOpen(false);
+      Swal.fire({
+        icon: "success",
+        title: "Éxito",
+        text: "Usuario creado correctamente.",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo crear el usuario.",
+      });
+    }
+  };
 
   return (
     <div>
@@ -94,18 +136,35 @@ export const Registration = ({ open, setOpen, handleOpen }) => {
               <TextField
                 sx={{ backgroundColor: "white", width: "100%" }}
                 placeholder="Nombre"
+                onChange={handleInputChange}
+                name="firstname"
+                autocomplete="off"
+                value={registrationData.firstname}
               />
               <TextField
                 sx={{ backgroundColor: "white", width: "100%" }}
                 placeholder="Apellido"
+                onChange={handleInputChange}
+                name="lastname"
+                autocomplete="off"
+                value={registrationData.lastname}
               />
               <TextField
                 sx={{ backgroundColor: "white", width: "100%" }}
                 placeholder="Email"
+                onChange={handleInputChange}
+                name="email"
+                autocomplete="off"
+                value={registrationData.email}
               />
               <TextField
                 sx={{ backgroundColor: "white", width: "100%" }}
                 placeholder="Contraseña"
+                onChange={handleInputChange}
+                name="password"
+                type="password"
+                autocomplete="off"
+                value={registrationData.password}
               />
             </Box>
 
@@ -131,6 +190,7 @@ export const Registration = ({ open, setOpen, handleOpen }) => {
                 width: "315px",
                 height: "62px",
               }}
+              onClick={handleSubmit}
             >
               Regìstrate
             </Button>

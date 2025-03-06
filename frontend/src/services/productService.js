@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 
 const URL = "http://localhost:8080/products";
 
+// PRODUCTS
 
 // Get all products
 export const getProducts = async () => {
@@ -52,4 +53,30 @@ export const deleteProduct = async (id) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
+
+// USERS
+
+export const registerUser = async (user) => {
+  try {
+    const response = await fetch("http://localhost:8080/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    if (response.status === 400) {
+      const responseText = await response.text();
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: responseText,
+      });
+      return;
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
