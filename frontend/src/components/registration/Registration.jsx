@@ -47,13 +47,11 @@ export const Registration = ({ open, setOpen }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerUser(registrationData);
-      setRegistrationData({
-        firstname: "",
-        lastname: "",
-        email: "",
-        password: "",
-      });
+      const response = await registerUser(registrationData);
+      if (response?.token) {
+        localStorage.setItem("token", response.token); 
+        setRegistrationData({ firstname: "", lastname: "", email: "", password: "" });
+      }
       setOpen(false);
       Swal.fire({
         icon: "success",
