@@ -61,18 +61,25 @@ const Login = ({ open, handleClose, handleLogin }) => {
           borderRadius: 2,
         }}
       >
-        <IconButton
-          onClick={handleClose}
-          sx={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            backgroundColor: "#00CED1",
-            color: "white",
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
+        <Box sx={{height: '90px'}}>
+          <img
+            src="src/assets/logo.svg"
+            alt="logo xplora+"
+            style={{ width: "150px", height: "auto", position: "absolute", top: 10, left: 10, }}
+          />
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              backgroundColor: "#00CED1",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
 
         <Typography
           variant="h6"
