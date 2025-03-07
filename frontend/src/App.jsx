@@ -39,7 +39,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         {/*<Route path="*" element={<NotFoundPage />} />*/}
       </Routes>
-      {!isRestrictedPage && <Footer />}
+      {!isRestrictedPage && !isAdminPage && <Footer />}
     </AuthProvider>
   );
 }

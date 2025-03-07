@@ -46,6 +46,7 @@ export const MyMenu = () => {
         primaryText="Lista de usuarios"
         leftIcon={<GroupIcon />}
       />
+
     </Menu>
   );
 };

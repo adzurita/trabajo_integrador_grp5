@@ -62,7 +62,7 @@ export const PostCreate = () => {
               <TextInput source="Nombre" label="Nombre" fullWidth />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+{/*             <Grid item xs={12} sm={6}>
               <SelectInput
                 source="Categoría"
                 label="Categoría"
@@ -76,7 +76,7 @@ export const PostCreate = () => {
                 ]}
                 fullWidth
               />
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12}>
               <TextInput

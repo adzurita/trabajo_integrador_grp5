@@ -64,7 +64,7 @@ export const Profile = () => {
           backgroundColor: user.isAdmin ? "#f8d7da" : "#d4edda",
         }}
       >
-        {user.isAdmin ? "SUPERADMIN" : "USER"}
+        {user.isAdmin ? "Administrador" : "Usuario"}
       </p>
     </div>
   );
