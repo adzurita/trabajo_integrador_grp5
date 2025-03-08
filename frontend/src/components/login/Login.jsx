@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { Modal, Box, Typography, TextField, Button, IconButton } from "@mui/material";
+import {
+  Modal,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+
 
 const Login = ({ open, handleClose, handleLogin }) => {
   const [email, setEmail] = useState("");
@@ -18,17 +26,20 @@ const Login = ({ open, handleClose, handleLogin }) => {
       setError("Por favor, completa todos los campos.");
       return;
     }
-    if (email !== validCredentials.email || password !== validCredentials.password) {
+/*     if (
+      email !== validCredentials.email ||
+      password !== validCredentials.password
+    ) {
       setError("Datos incorrectos. Inténtalo de nuevo.");
       return;
     }
-
-    handleLogin(email, password); 
+ */
+    handleLogin(email, password);
     setError("");
-    setEmail("")
-    setPassword("")
+    setEmail("");
+    setPassword("");
     handleClose();
-  }
+  };
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
@@ -37,60 +48,84 @@ const Login = ({ open, handleClose, handleLogin }) => {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: 400,
-        bgcolor: "white",
-        boxShadow: 24,
-        p: 4,
-        borderRadius: 2,
-      }}>
-        <IconButton 
-          onClick={handleClose} 
-          sx={{ position: "absolute", top: 10, right: 10, backgroundColor: "#00CED1", color: "white" }}
-        >
-          <CloseIcon />
-        </IconButton>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 400,
+          bgcolor: "white",
+          boxShadow: 24,
+          p: 4,
+          borderRadius: 2,
+        }}
+      >
+        <Box sx={{height: '90px'}}>
+          <img
+            src="src/assets/logo.svg"
+            alt="logo xplora+"
+            style={{ width: "150px", height: "auto", position: "absolute", top: 10, left: 10, }}
+          />
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              backgroundColor: "#00CED1",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
 
-        <Typography variant="h6" textAlign="center" fontWeight="bold" gutterBottom>
+        <Typography
+          variant="h6"
+          textAlign="center"
+          fontWeight="bold"
+          gutterBottom
+        >
           Inicia sesión para acceder a lo mejor de Xplora+
         </Typography>
 
         <form onSubmit={handleSubmit}>
-          <TextField 
-            fullWidth 
-            label="Correo electrónico" 
-            variant="outlined" 
+          <TextField
+            fullWidth
+            label="Correo electrónico"
+            variant="outlined"
             margin="normal"
             value={email}
             onChange={handleInputChange(setEmail)}
           />
-          <TextField 
-            fullWidth 
-            label="Contraseña" 
+          <TextField
+            fullWidth
+            label="Contraseña"
             type="password"
-            variant="outlined" 
+            variant="outlined"
             margin="normal"
             value={password}
             onChange={handleInputChange(setPassword)}
           />
 
-          {error && <Typography color="error" textAlign="center">{error}</Typography>}
+          {error && (
+            <Typography color="error" textAlign="center">
+              {error}
+            </Typography>
+          )}
 
-          <Typography 
-            variant="body2" 
-            textAlign="right" 
+          <Typography
+            variant="body2"
+            textAlign="right"
             sx={{ color: "#00CED1", cursor: "pointer", mt: 1 }}
           >
             ¿Has olvidado tu contraseña?
           </Typography>
 
-          <Button 
-            fullWidth 
-            variant="contained" 
+          <Button
+            fullWidth
+            variant="contained"
             sx={{ mt: 2, backgroundColor: "#00CED1", color: "white" }}
             type="submit"
           >

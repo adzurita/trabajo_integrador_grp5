@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
+import { loginUser, getProfile } from "../services/productService";
 
 export const AuthContext = createContext();
 
@@ -12,18 +13,40 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  
-  const login = (email, password) => {
-    // petición al backend para validar credenciales
-    const fakeUser = { name: "Juan Pérez", email, avatar: "JP" };
-    
-    localStorage.setItem("user", JSON.stringify(fakeUser));
-    setUser(fakeUser);
+  const login = async (email, password) => {
+    const response = await loginUser({ email, password });
+    if (!response) {
+      return;
+    }
+    let token;
+    if (response?.token) {
+      token = response.token;
+      localStorage.setItem("token", token);
+      const profile = await getProfile(token);
+      console.log("🚀🚀🚀🚀🚀profile:", profile);
+      const { firstname, lastname, email } = profile;
+      const initials = `${firstname.charAt(0)}${lastname.charAt(
+        0
+      )}`.toUpperCase();
+
+      const user = {
+        name: `${firstname} ${lastname}`,
+        email,
+        avatar: initials,
+        isAdmin: profile.role === "SUPERADMIN" || profile.role === "ADMIN",
+      };
+
+      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+      window.location.href = "/profile";
+    }
   };
 
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
+    window.location.href = "/";
   };
 
   return (
@@ -32,3 +55,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
