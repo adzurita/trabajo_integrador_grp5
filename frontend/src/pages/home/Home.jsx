@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { ImageSlider } from "../../components/imageSlider/ImageSlider";
-import { Recommendations } from "../../components/recommendations/recommendations";
+import { Recommendations } from "../../components/recommendations/Recommendations";
 import { Explore } from "../../components/explore/Explore";
 
 export const Home = () => {
