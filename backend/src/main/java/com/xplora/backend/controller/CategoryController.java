@@ -1,6 +1,7 @@
 package com.xplora.backend.controller;
 
 import com.xplora.backend.entity.Category;
+import com.xplora.backend.entity.Product;
 import com.xplora.backend.service.implementation.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class CategoryController {
     }
 
     @PostMapping("/{productId}/assign/{categoryId}")
-    public Category assignCategoryToProduct(@PathVariable Long productId, @PathVariable Long categoryId) {
+    public Product assignCategoryToProduct(@PathVariable Long productId, @PathVariable Long categoryId) {
         return categoryService.assignCategoryToProduct(productId, categoryId);
     }
 }
