@@ -23,7 +23,6 @@ public class CategoryController {
     @PostMapping
     public Category createCategory(@RequestBody Category category) {
         return categoryService.createCategory(
-                category.getName(),
                 category.getTitle(),
                 category.getDescription(),
                 category.getImageUrl()
