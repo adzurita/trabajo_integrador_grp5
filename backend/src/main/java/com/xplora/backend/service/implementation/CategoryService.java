@@ -22,12 +22,15 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category createCategory(String name) {
+    public Category createCategory(String name, String title, String description, String imageUrl) {
         if (categoryRepository.findByName(name) != null) {
             throw new RuntimeException("La categoría ya existe");
         }
         Category category = new Category();
         category.setName(name);
+        category.setTitle(title);
+        category.setDescription(description);
+        category.setImageUrl(imageUrl);
         return categoryRepository.save(category);
     }
 
@@ -39,6 +42,6 @@ public class CategoryService {
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
         product.setCategory(category);
-        return productRepository.save(product); // Guardar el producto con la categoría asignada
+        return productRepository.save(product);
     }
 }
