@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,12 +30,24 @@ public class Product {
     private Double price;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt; // TODO: formato?
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime updatedAt; // TODO: formato?
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Column(nullable = false)
     private Set<Image> imageSet = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_feature", // Nombre de la tabla  en la BD
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_id")
+    )
+    private List<Feature> features;
 }
