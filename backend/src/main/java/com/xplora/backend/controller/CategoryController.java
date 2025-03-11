@@ -21,8 +21,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody String name) {
-        return categoryService.createCategory(name);
+    public Category createCategory(@RequestBody Category category) {
+        return categoryService.createCategory(
+                category.getName(),
+                category.getTitle(),
+                category.getDescription(),
+                category.getImageUrl()
+        );
     }
 
     @PostMapping("/{productId}/assign/{categoryId}")
