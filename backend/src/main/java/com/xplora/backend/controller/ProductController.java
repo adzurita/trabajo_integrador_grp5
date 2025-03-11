@@ -80,10 +80,4 @@ public class ProductController {
                     .body(ex.getMessage());
         }
     }
-    // Obtener productos por categoría
-    @GetMapping("/category/{categoryId}")
-    public List<Product> getProductsByCategory(@PathVariable Long categoryId) {
-        return productService.getProductsByCategory(categoryId);
-    }
-
 }
