@@ -92,6 +92,6 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<Product> getProductsByCategory(Long categoryId) {
-        return List.of();
+        return iProductRepository.findByCategoryId(categoryId);
     }
 }

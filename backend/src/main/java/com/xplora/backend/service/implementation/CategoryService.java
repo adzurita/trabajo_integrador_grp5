@@ -22,17 +22,19 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category createCategory(String name, String title, String description, String imageUrl) {
-        if (categoryRepository.findByName(name) != null) {
+    public Category createCategory(String title, String description, String imageUrl) {
+        if (categoryRepository.findByTitle(title).isPresent()) { // ✅ Usa Optional correctamente
             throw new RuntimeException("La categoría ya existe");
         }
+
         Category category = new Category();
-        category.setName(name);
         category.setTitle(title);
         category.setDescription(description);
         category.setImageUrl(imageUrl);
         return categoryRepository.save(category);
     }
+
+
 
     public Product assignCategoryToProduct(Long productId, Long categoryId) {
         Product product = productRepository.findById(productId)

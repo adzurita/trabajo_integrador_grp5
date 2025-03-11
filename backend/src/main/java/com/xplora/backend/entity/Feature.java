@@ -11,19 +11,22 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Feature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private String iconUrl;
 
     @ManyToMany(mappedBy = "features")
     private List<Product> products;
-
-    public void setProduct(Product product) {
-    }
 }
-
