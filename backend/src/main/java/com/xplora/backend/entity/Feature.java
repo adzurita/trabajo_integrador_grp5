@@ -26,3 +26,4 @@ public class Feature {
     public void setProduct(Product product) {
     }
 }
+
