@@ -1,29 +1,26 @@
 package com.xplora.backend.entity;
 
+import com.xplora.backend.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "features")
+@Table(name = "categories")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Feature {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "features")
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
-
-    public void setProduct(Product product) {
-    }
 }
-

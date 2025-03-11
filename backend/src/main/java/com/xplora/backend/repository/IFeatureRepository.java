@@ -8,3 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface IFeatureRepository extends JpaRepository<Feature, Long> {
     // No se necesita buscar por productId porque la relación es ManyToMany
 }
+

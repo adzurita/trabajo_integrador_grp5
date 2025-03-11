@@ -42,7 +42,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-
     @ManyToMany
     @JoinTable(
             name = "product_feature", // Nombre de la tabla  en la BD
@@ -51,3 +50,4 @@ public class Product {
     )
     private List<Feature> features;
 }
+
