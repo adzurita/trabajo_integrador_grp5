@@ -24,8 +24,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(
                 auth -> {
-                    // endpoints que no requieren autenticacion
                     //auth.anyRequest().permitAll();
+                    // endpoints que no requieren autenticacion
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers("/api/auth/**").permitAll();
                     auth.requestMatchers("/h2-console/**").permitAll();
