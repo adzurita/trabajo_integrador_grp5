@@ -1,15 +1,52 @@
+import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
-const images = [
-  "https://picsum.photos/1200/500?random=1",
-  "https://picsum.photos/1200/500?random=2",
-  "https://picsum.photos/1200/500?random=3"
-];
+const API_BASE_URL = "http://localhost:8080"; // Reemplazar con la URL real del backend
+const PLACEHOLDER_IMAGE = "https://via.placeholder.com/1200x500?text=Imagen+no+disponible"; // Imagen por defecto
 
 export const ImageSlider = () => {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchImagesForSlider = async () => {
+      try {
+        const productResponse = await fetch(`${API_BASE_URL}/products`);
+        const productData = await productResponse.json();
+
+        let imagesArray = [];
+
+        for (const product of productData) {
+          if (imagesArray.length >= 5) break; // Detenerse cuando ya hay 5 imágenes
+
+          try {
+            const imageResponse = await fetch(`${API_BASE_URL}/images/${product.id}`);
+            const imageData = await imageResponse.json();
+
+            if (imageData.length > 0) {
+              imagesArray = [...imagesArray, ...imageData.map(img => img.url)];
+            }
+          } catch {
+            imagesArray.push(PLACEHOLDER_IMAGE);
+          }
+        }
+
+        // Asegurar que haya al menos 5 imágenes en total
+        while (imagesArray.length < 5) {
+          imagesArray.push(PLACEHOLDER_IMAGE);
+        }
+
+        setImages(imagesArray.slice(0, 5)); // Tomar solo las primeras 5 imágenes
+      } catch (error) {
+        console.error("Error al obtener imágenes para el slider:", error);
+        setImages(Array(5).fill(PLACEHOLDER_IMAGE)); // Mostrar 5 imágenes de respaldo en caso de error
+      }
+    };
+
+    fetchImagesForSlider();
+  }, []);
 
   const settings = {
     dots: true,
@@ -69,6 +106,7 @@ export const ImageSlider = () => {
                 borderRadius: 10, 
                 objectFit: "cover" 
               }}
+              onError={(e) => { e.target.src = PLACEHOLDER_IMAGE; }}
             />
             <Typography
               variant="h5"
