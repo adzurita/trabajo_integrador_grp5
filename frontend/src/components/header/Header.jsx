@@ -102,10 +102,13 @@ export const Header = () => {
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               {user ? (
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                  <Avatar sx={{ bgcolor: "#00CED1", color: "white" }}>
-                    {user.avatar}
-                  </Avatar>
-                  <UserMenu />
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Avatar sx={{ bgcolor: "#00CED1", color: "white" }}>
+                      {user.avatar}
+                    </Avatar>
+                    <UserMenu />
+                  </Box>
+
                   <Button onClick={logout} sx={{ color: "#A39A9A" }}>
                     Cerrar sesión
                   </Button>

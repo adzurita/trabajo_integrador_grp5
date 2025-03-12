@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Box, Card, CardMedia, CardContent, Typography, IconButton, Button } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  IconButton,
+  Button,
+} from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 const dummyProducts = Array.from({ length: 20 }, (_, i) => ({
@@ -51,26 +59,51 @@ export const Recommendations = () => {
 
   return (
     <Box sx={{ mt: 4, width: "100%", margin: "0 auto" }}>
-      <Typography 
-        variant="h4" 
-        sx={{ 
-          fontFamily: "Outfit", 
-          fontWeight: 700, 
+      <Typography
+        variant="h4"
+        sx={{
+          fontFamily: "Outfit",
+          fontWeight: 700,
           fontSize: { xs: "24px", sm: "30px", md: "40px" },
           textAlign: "left",
-          // pl: '40px', 
-          mb: 3 
+          color: "#0E2880",
+          // pl: '40px',
+          mb: 3,
         }}
       >
         Las experiencias más recomendadas
       </Typography>
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
         <IconButton onClick={prevSlide} disabled={index === 0}>
           <ArrowBackIos />
         </IconButton>
-        <Box sx={{ display: "flex", overflow: "hidden", gap: 2, width: "100%", justifyContent: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            overflow: "hidden",
+            gap: 2,
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
           {products.slice(index, index + visibleCards).map((product) => (
-            <Card key={product.id} sx={{ flex: "1 0 auto", maxWidth: "100%", minWidth: { xs: "100%", sm: "48%", md: "30%" }, borderRadius: "16px", boxShadow: 3 }}>
+            <Card
+              key={product.id}
+              sx={{
+                flex: "1 0 auto",
+                maxWidth: "100%",
+                minWidth: { xs: "100%", sm: "48%", md: "30%" },
+                borderRadius: "16px",
+                boxShadow: 3,
+              }}
+            >
               <CardMedia
                 component="img"
                 sx={{ height: 220, width: "100%", objectFit: "cover" }}
@@ -78,26 +111,58 @@ export const Recommendations = () => {
                 alt={product.name}
               />
               <CardContent>
-                <Typography variant="h6" align="center">{product.name}</Typography>
-                <Typography variant="body2" color="textSecondary" align="center">{product.description}</Typography>
-                <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
-                  <Typography variant="body2">⏳ {product.available_date}</Typography>
+                <Typography variant="h6" align="center">
+                  {product.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  align="center"
+                >
+                  {product.description}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: 1,
+                  }}
+                >
+                  <Typography variant="body2">
+                    ⏳ {product.available_date}
+                  </Typography>
                   <Typography variant="body2">⭐ 4.5</Typography>
                 </Box>
-                <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: 1,
+                  }}
+                >
                   <Typography variant="body2">📍 Ubicación</Typography>
-                  <Typography variant="h6" fontWeight="bold">{product.price}</Typography>
+                  <Typography variant="h6" fontWeight="bold">
+                    {product.price}
+                  </Typography>
                 </Box>
-                <Button variant="contained" fullWidth sx={{ mt: 2, backgroundColor:"#00CED1" }}>Reservar</Button>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  sx={{ mt: 2, backgroundColor: "#00CED1" }}
+                >
+                  Reservar
+                </Button>
               </CardContent>
             </Card>
           ))}
         </Box>
-        <IconButton onClick={nextSlide} disabled={index >= products.length - visibleCards}>
+        <IconButton
+          onClick={nextSlide}
+          disabled={index >= products.length - visibleCards}
+        >
           <ArrowForwardIos />
         </IconButton>
       </Box>
     </Box>
   );
 };
-

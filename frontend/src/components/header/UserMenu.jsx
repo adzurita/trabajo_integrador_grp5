@@ -1,13 +1,20 @@
 import Button from "@mui/material/Button";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useContext, useState } from "react";
-import { ListItemIcon, Menu, MenuItem } from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  ThemeProvider,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import PersonIcon from "@mui/icons-material/Person";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import { red } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
 
 export default function UserMenu() {
   const { user } = useContext(AuthContext);
@@ -37,15 +44,24 @@ export default function UserMenu() {
 
   return (
     <div>
-      <Button
+      <IconButton
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{
+          p: "0px",
+          mr: "25px",
+        }}
       >
-        <ExpandMoreIcon />
-      </Button>
+        <ExpandMoreIcon
+          sx={{
+            color: "#B7B7B7",
+          }}
+          fontSize="medium"
+        />
+      </IconButton>
 
       <Menu
         id="basic-menu"
@@ -69,23 +85,39 @@ export default function UserMenu() {
       >
         <MenuItem onClick={navigateToProfile}>
           <ListItemIcon>
-            <PersonIcon />
+            <PersonIcon
+              sx={{
+                color: "#FD346E",
+              }}
+            />
           </ListItemIcon>
           Perfil
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
-            <FavoriteIcon />
+            <FavoriteIcon
+              sx={{
+                color: "#FD346E",
+              }}
+            />
           </ListItemIcon>
           Favoritos
         </MenuItem>
+
         {user.isAdmin && (
-          <MenuItem onClick={navigateToAdmin}>
-            <ListItemIcon>
-              <AdminPanelSettingsIcon />
-            </ListItemIcon>
-            Administración
-          </MenuItem>
+          <div>
+            <Divider />
+            <MenuItem onClick={navigateToAdmin}>
+              <ListItemIcon>
+                <AdminPanelSettingsIcon
+                  sx={{
+                    color: green[500],
+                  }}
+                />
+              </ListItemIcon>
+              Administración
+            </MenuItem>
+          </div>
         )}
       </Menu>
     </div>
