@@ -18,12 +18,22 @@ public class CategoryService {
     @Autowired
     private IProductRepository productRepository;
 
+    // Obtener todas las categorías
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
+    // Obtener productos de una categoría con validación
+    public List<Product> getProductsByCategory(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+
+        return category.getProducts();
+    }
+
+    // Crear una nueva categoría con validación de nombre duplicado
     public Category createCategory(String title, String description, String imageUrl) {
-        if (categoryRepository.findByTitle(title).isPresent()) { // ✅ Usa Optional correctamente
+        if (categoryRepository.findByTitle(title).isPresent()) {
             throw new RuntimeException("La categoría ya existe");
         }
 
@@ -34,8 +44,7 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-
-
+    // Asignar una categoría a un producto con validaciones
     public Product assignCategoryToProduct(Long productId, Long categoryId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
@@ -45,5 +54,20 @@ public class CategoryService {
 
         product.setCategory(category);
         return productRepository.save(product);
+    }
+
+    // verificar si una categoria existe
+    public boolean existsById(Long categoryId) {
+        return categoryRepository.existsById(categoryId);
+    }
+
+    // verificar si un producto existe
+    public boolean productExistsById(Long productId) {
+        return productRepository.existsById(productId);
+    }
+
+    // verificar que una categoria con el mismo nombre existe
+    public boolean existsByTitle(String title) {
+        return categoryRepository.findByTitle(title).isPresent();
     }
 }

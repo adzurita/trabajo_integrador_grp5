@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IFeatureRepository extends JpaRepository<Feature, Long> {
-    // No se necesita buscar por productId porque la relación es ManyToMany
+    boolean existsByName(String name);  // Verifica si una característica con el mismo nombre ya existe
 }
-
