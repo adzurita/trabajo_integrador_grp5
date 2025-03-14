@@ -4,12 +4,13 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
 const images = [
-  "https://images.unsplash.com/photo-1541233349642-6e425fe6190e", // Persona en la cima de una roca
-  "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0", // Furgoneta Volkswagen en carretera
-  "https://images.unsplash.com/photo-1516972810927-80185027ca84", // Cámara, libro y bolso
+  "https://picsum.photos/1200/500?random=1",
+  "https://picsum.photos/1200/500?random=2",
+  "https://picsum.photos/1200/500?random=3"
 ];
 
 export const ImageSlider = () => {
+
   const settings = {
     dots: true,
     infinite: true,
