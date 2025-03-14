@@ -24,6 +24,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(
                 auth -> {
+                    //auth.anyRequest().permitAll();
                     // endpoints que no requieren autenticacion
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers("/api/auth/**").permitAll();
@@ -40,12 +41,16 @@ public class SecurityConfiguration {
                     auth.requestMatchers(HttpMethod.DELETE, "/products/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     auth.requestMatchers(HttpMethod.POST, "/images/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     auth.requestMatchers("/users").hasAnyAuthority("ADMIN", "SUPERADMIN");
-                    auth.requestMatchers("/users/*/role/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
+                    //auth.requestMatchers("/users/*/role/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     // protección para categorías
+                    auth.requestMatchers(HttpMethod.GET, "/categories/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/categories/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
-                    auth.requestMatchers(HttpMethod.GET, "/categories/**").permitAll(); //
+                    // features
+                    auth.requestMatchers(HttpMethod.GET, "/features/product/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/features").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     auth.requestMatchers(HttpMethod.POST, "/features/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
-                    auth.requestMatchers(HttpMethod.GET, "/features/**").permitAll();
+                    auth.requestMatchers(HttpMethod.PUT, "/features/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
+                    auth.requestMatchers(HttpMethod.DELETE, "/features/**").hasAnyAuthority("ADMIN", "SUPERADMIN");
                     //auth.requestMatchers("/users/**").hasAuthority("ADMIN");
                     // endpoints que requieren autenticacion (al menos el rol de usuario)
                     auth.requestMatchers( "/send-email/**").authenticated();

@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Box, TextField, Button, Typography, Pagination, Rating, InputAdornment, Stack } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Pagination,
+  Rating,
+  InputAdornment,
+} from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Search } from "@mui/icons-material";
@@ -9,8 +17,8 @@ const API_BASE_URL = "http://localhost:8080";
 const PLACEHOLDER_IMAGE = "https://picsum.photos/200/300"; // Imagen de respaldo estática
 
 export const Explore = () => {
-  const [products, setProducts] = useState([]); // Productos obtenidos del backend
-  const [filteredProducts, setFilteredProducts] = useState([]); // Productos filtrados por búsqueda/categoría
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [page, setPage] = useState(1);
@@ -23,7 +31,6 @@ export const Explore = () => {
         const response = await fetch(`${API_BASE_URL}/products`);
         const data = await response.json();
 
-        // Asignar la primera imagen del producto o la imagen de respaldo
         const processedProducts = data.map((product) => ({
           ...product,
           imageUrl: product.imageSet?.[0]?.imageUrl || PLACEHOLDER_IMAGE,
@@ -61,9 +68,8 @@ export const Explore = () => {
 
   return (
     <Box sx={{ width: "100%", margin: "0 auto", mt: 4 }}>
-      {/* Encabezado y búsqueda */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3, flexWrap: "wrap", gap: 2 }}>
-        <Typography sx={{ fontFamily: "Outfit", fontWeight: 700, fontSize: "40px", lineHeight: "50.4px" }}>
+        <Typography sx={{ fontFamily: "Outfit", fontWeight: 700, fontSize: "40px", lineHeight: "50.4px", color: "#0E2880" }}>
           Explora más
         </Typography>
         <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
@@ -85,22 +91,34 @@ export const Explore = () => {
         </Box>
       </Box>
 
-      {/* Botones de categorías */}
       <Box sx={{ display: "flex", gap: 1, overflowX: "auto", mb: 3, flexWrap: "wrap" }}>
         {categories.map((category) => (
           <Button
             key={category}
             variant={selectedCategory === category ? "contained" : "outlined"}
             onClick={() => setSelectedCategory(category)}
-            sx={{ borderColor: "#00CED1", backgroundColor: selectedCategory === category ? "#00CED1" : "#ffffff", color: selectedCategory === category ? "#ffffff" : "#00CED1" }}
+            sx={{
+              borderColor: "#00CED1",
+              backgroundColor: selectedCategory === category ? "#00CED1" : "#ffffff",
+              color: selectedCategory === category ? "#ffffff" : "#00CED1",
+            }}
           >
             {category}
           </Button>
         ))}
       </Box>
 
-      {/* Grid de productos */}
-      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }, gap: 3 }}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+          },
+          gap: 3,
+        }}
+      >
         {paginatedProducts.map((product) => (
           <Box
             key={product.id}
@@ -114,14 +132,12 @@ export const Explore = () => {
               "&:hover": { transform: "scale(1.05)" },
             }}
           >
-            {/* Imagen con fallback a una imagen de respaldo */}
             <img
               src={product.imageUrl}
               alt={product.name}
               style={{ width: "100%", height: 220, objectFit: "cover" }}
-              onError={(e) => { e.target.src = PLACEHOLDER_IMAGE; }} // Previene imágenes rotas
+              onError={(e) => { e.target.src = PLACEHOLDER_IMAGE; }}
             />
-
             <Box sx={{ p: 2 }}>
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -135,13 +151,14 @@ export const Explore = () => {
                 <LocationOnIcon sx={{ fontSize: 16, color: "gray" }} />
                 <Typography variant="body2" color="textSecondary">{product.location}</Typography>
               </Box>
-              <Typography variant="h6" fontWeight="bold" sx={{ mt: 1 }}>{product.price}</Typography>
+              <Typography variant="h6" fontWeight="bold" sx={{ mt: 1 }}>
+                {product.price}
+              </Typography>
             </Box>
           </Box>
         ))}
       </Box>
 
-      {/* Paginación */}
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Pagination count={totalPages} page={page} onChange={(_, value) => setPage(value)} />
       </Box>
